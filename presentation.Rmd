@@ -78,7 +78,7 @@ monthly_average = DIVIDE([sum_price], [distinct_months])
 
 # End Product {.normal_slide}
 
-- Line graphs by product over time
+- Line graphs and tables by product over time
 - Price
 - Number of orders
 - Number of distinct customers
@@ -133,6 +133,19 @@ monthly_average = DIVIDE([sum_price], 12)
 
 # Better Strategies {.section_slide .center}
 
+# Setup with Bigger Dataset {.normal_slide}
+
+- big_data
+
+# End Product {.normal_slide}
+
+- Line graphs and tables by product over time
+- Price
+- Number of orders
+- Number of distinct customers
+- Filter by product and month
+- Fill in zeros for sales when product is available
+
 # Better Strategies {.normal_slide}
 
 - Calendar Table Setup
@@ -167,12 +180,13 @@ cal_table = CALENDAR(
 
 # Calendar Table {.normal_slide}
 
-- Need image of cal table here
-
+<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/cal_table.png" width=100%>
+  
 # Calendar Table {.normal_slide}
 
 <img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
-  src="images/cal_table.png" width=100%>
+  src="images/cal_table_connection.png" width=100%>  
   
 # Better Strategies {.normal_slide}
 
@@ -182,7 +196,25 @@ cal_table = CALENDAR(
 
 # Star Schema {.normal_slide}
 
-- Need image of cal table here
+- Main orders table in the middle
+
+- Important factors on the outside
+
+- Get better definitions
+
+# Star Schema {.normal_slide}
+
+```{}
+cal_month = STARTOFMONTH(cal_table[DATE])
+```
+
+```{}
+product = SUMMARIZECOLUMNS(orders_big[product])
+```
+
+# Star Schema {.normal_slide}
+
+- star_schema.png
 
 # Better Strategies {.normal_slide}
 
@@ -191,3 +223,51 @@ cal_table = CALENDAR(
 - Star Schema
 
 - ADDMISSINGITEMS()
+
+# ADDMISSINGITEMS() {.normal_slide}
+
+- ShowAll_ColumnName - What you want to fill in
+- Table - Base table with missing data (orders table here)
+- GroupBy_ColumnName - What you want to fill in (same as ShowAll_ColumnName unless ROLLUP)
+- FilterTable - Filter out unneeded combinations
+
+# ADDMISSINGITEMS() {.normal_slide}
+```{}
+orders_zeros_months_added = 
+CALCULATETABLE(...)
+```
+
+# ADDMISSINGITEMS() {.normal_slide}
+
+- zeros_added_table.png
+
+# ADDMISSINGITEMS() {.normal_slide}
+
+- zeros_added_graph.png
+
+# ADDMISSINGITEMS() {.normal_slide}
+
+- zeros_added_table_viz.png
+
+# Star Schema Again {.normal_slide}
+
+- Yeah, again
+
+# High Density Sampling {.normal_slide}
+
+- Might need to turn this off
+
+# Filter Product Availability
+
+- table_image.png
+
+# Filter Product Availability
+
+- Import the data
+
+- Make Connections
+
+# Filter Product Availability
+```{}
+product_availability = FILTER(CROSSJOIN(cal_table, product), cal_month[month] >= product[start_month] && cal_month[month] <= product[end_month])
+```

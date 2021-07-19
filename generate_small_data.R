@@ -28,9 +28,8 @@ orders <- data.frame(order_number = sample(seq(1000, 999999), n_total),
                                      replace = TRUE, date_probs$prob_B),
                               sample(date_probs$date, n_C, 
                                      replace = TRUE, date_probs$prob_C)),
-                     price = c(rep('60', n_A),
-                               rep('75', n_B),
-                               rep('100', n_C)))
+                     dollar_amount = c(rep('60', n_A),
+                                rep('75', n_B),
+                                rep('100', n_C)))
 
 write.csv(orders, "orders_small.csv", row.names = FALSE)
-

@@ -14,7 +14,7 @@ products$product <- gsub('7', 'H', products$product)
 products$product <- gsub('8', 'I', products$product)
 products$product <- gsub('9', 'J', products$product)
 
-products$price <- sample(seq(10, 275), n_products, replace = TRUE)
+products$dollar_amount <- sample(seq(10, 275), n_products, replace = TRUE)
 
 day_list <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by="day")
 start_month_list <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by="months")
@@ -40,7 +40,7 @@ start_end_dates <- rbind(start_end_dates, cross_over_1, cross_over_2)
 
 # Create orders
 products_probs <- data.frame(product = products$product,
-                             price = products$price)
+                             dollar_amount = products$dollar_amount)
 
 start_end_dates$difference <- start_end_dates$end_month - start_end_dates$start_month
 summation <- aggregate(difference ~ product, data = start_end_dates, FUN = sum)
@@ -75,12 +75,12 @@ products_probs_extended <- products_probs_extended[products_probs_extended$date 
                                                      products_probs_extended$date <= products_probs_extended$end_month, ]
 
 current <- data.frame(product = current_product,
-                      price = products[products$product == current_product, 'price'],
+                      dollar_amount = products[products$product == current_product, 'dollar_amount'],
                       date = sample(products_probs_extended$date, products_probs[products_probs$product == current_product, 'n_orders'],
                                     replace = TRUE, prob = products_probs_extended$prob))
 
 orders <- data.frame(product = current_product,
-                     price = products[products$product == current_product, 'price'],
+                     dollar_amount = products[products$product == current_product, 'dollar_amount'],
                      date = sample(products_probs_extended$date, products_probs$n_orders[1],
                                    replace = TRUE, prob = products_probs_extended$prob))
 
@@ -103,7 +103,7 @@ for(i in seq(2, n_products)) {
                                                        products_probs_extended$date <= products_probs_extended$end_month, ]
   
   current <- data.frame(product = current_product,
-                        price = products[products$product == current_product, 'price'],
+                        dollar_amount = products[products$product == current_product, 'dollar_amount'],
                         date = sample(products_probs_extended$date, products_probs[products_probs$product == current_product, 'n_orders'],
                                       replace = TRUE, prob = products_probs_extended$prob))
   
@@ -115,19 +115,8 @@ orders <- data.frame(order_number = sample(seq(1000, 999999), nrow(orders)),
                      product = orders$product,
                      customer_id = sample(cust_ids, replace = TRUE, nrow(orders)),
                      date = orders$date,
-                     price = orders$price)
+                     dollar_amount = orders$dollar_amount)
 
-## Clear out weird outliers
-summation <- aggregate(order_number ~ product + months(date), data = orders, FUN = length)
-outliers <- summation[summation$order_number > 200, 'product']
-
-orders[orders$product == outliers[1], ]
-products_probs[products_probs$product == outliers[1], ]
-
-nrow(orders[orders$product == products_probs[1, 'product'], ])
-products_probs[1, ]
-
-
-# orders <- orders[!(orders$product %in% outliers), ]
-
+products <- start_end_dates[, c('product', 'dollar_amount', 'start_month', 'end_month')]
+write.csv(products, "product.csv", row.names = FALSE)
 write.csv(orders, "orders_big.csv", row.names = FALSE)

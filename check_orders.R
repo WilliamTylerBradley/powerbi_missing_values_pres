@@ -14,19 +14,19 @@ ggplot(data = summation,
   ylim(c(0, max(summation$order_number))) +
   theme(legend.position = "none")
 
-summation <- aggregate(price ~ product + month, data = df, FUN = sum)
+summation <- aggregate(dollar_amount ~ product + month, data = df, FUN = sum)
 summation$month <- as.Date(paste0("01-", summation$month, "-2020"), "%d-%B-%Y")
 
 ggplot(data = summation,
-       aes(month, price, col = product)) +
+       aes(month, dollar_amount, col = product)) +
   geom_line() +
   geom_point() +
-  ylim(c(0, max(summation$price))) +
+  ylim(c(0, max(summation$dollar_amount))) +
   theme(legend.position = "none")
 
 # actual average per month
-summation <- aggregate(price ~ product, data = df, FUN = sum)
-summation$price / 12
+summation <- aggregate(dollar_amount ~ product, data = df, FUN = sum)
+summation$dollar_amount / 12
 
 summation[summation$product == 'IIJDJ', ]
 nrow(df[df$product == 'IIJDJ', ])

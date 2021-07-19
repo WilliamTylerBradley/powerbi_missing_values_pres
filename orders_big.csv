@@ -1,4 +1,4 @@
-"order_number","product","customer_id","date","price"
+"order_number","product","customer_id","date","dollar_amount"
 136784,"GBDGF",70570,2020-01-29,29
 342582,"GBDGF",67718,2020-06-23,29
 442917,"GBDGF",29733,2020-03-10,29
