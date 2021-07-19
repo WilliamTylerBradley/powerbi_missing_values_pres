@@ -1,0 +1,105 @@
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+.reveal {
+  background-color: #36265B;
+}
+
+.reveal code {
+  background-color: #36265B;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #5E517B;
+}
+ 
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal section img { 
+  background:none; 
+  border:none; 
+  box-shadow:none; 
+}
+
+.reveal ul {
+  list-style: none;
+}
+
+.reveal li::before {
+  content: "\2B29";
+  display: inline-block; 
+  width: 1em;
+  margin-left: -1em
+}
+
+/*****
+ Title Slide
+ *****/
+ .reveal .backgrounds .title_slide {
+  background-image: url('theme/title_background.png');
+  background-size: contain;
+}
+
+.reveal .title_slide {
+  color: white;
+  text-align: center;
+}
+
+.reveal .title_slide h1{
+  font-weight: bold;
+}
+
+
+/*****
+ Normal Slide
+ *****/
+ /* sometimes useful to have a "normal slide" to remove artifacts in slide transitions */
+ /* happens a lot with background_transition: 'fade' */
+.reveal .backgrounds .normal_slide {
+  background-image: url('theme/normal_background.png');
+  background-size: contain;
+}
+
+.reveal .normal_slide {
+  color: white;
+}
+
+/*****
+ Section Slide
+ *****/
+.reveal .section_slide{
+   color: white;
+   text-align: center;
+   font-weight: bold;
+}
+
+/* need separate one for backgrounds or divs show on transitions */
+.reveal .backgrounds .section_slide{
+   background: #F4A201;
+}
+
+/*****
+ Sub bullet point
+ *****/
+.reveal .sub_bullet {
+  font-size: 0.7em;
+}
+
+/*****
+ Grid style two column layout
+ *****/
+.container{
+  display: grid;
+  grid-auto-flow: column;
+}
+
+/*********************************************
+ * SLIDE NUMBER
+ *********************************************/
+.reveal .slide-number {
+  color: white; 
+  background: none;
+  bottom: -5%;
+  right: 0%
+}
