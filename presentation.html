@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
-  <title>pres_template.knit</title>
+  <title>presentation.knit</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="pres_template_files/reveal.js-3.3.0.1/css/reveal.css"/>
+  <link rel="stylesheet" href="presentation_files/reveal.js-3.3.0.1/css/reveal.css"/>
 
 
 
-<link rel="stylesheet" href="pres_template_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
+<link rel="stylesheet" href="presentation_files/reveal.js-3.3.0.1/css/theme/simple.css" id="theme">
 
 
   <!-- some tweaks to reveal css -->
@@ -443,7 +443,7 @@ style.innerHTML = style_script;
 document.getElementsByTagName('head')[0].appendChild(style);
 </script>
 
-    <script src="pres_template_files/header-attrs-2.8/header-attrs.js"></script>
+    <script src="presentation_files/header-attrs-2.8/header-attrs.js"></script>
 </head>
 <body>
   <div class="reveal">
@@ -457,37 +457,110 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <section id="background-example" class="slide level1 normal_slide">
 <h1 class="normal_slide">Background Example</h1>
 <ul>
-<li>Example with missing months graph</li>
+<li>Start out with base data to graph</li>
 </ul>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/background_base.png" width=75%></p>
 </section>
 <section id="background-example-1" class="slide level1 normal_slide">
 <h1 class="normal_slide">Background Example</h1>
-<ul>
-<li>Example with missing months table</li>
-</ul>
+<div style="margin-top: 7%; margin-bottom: 15%;">
+<pre><code>month_date = STARTOFMONTH(orders_small[date])</code></pre>
+</div>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/background_month.png" width=75%></p>
 </section>
 <section id="background-example-2" class="slide level1 normal_slide">
 <h1 class="normal_slide">Background Example</h1>
-<ul>
-<li>Example with missing months edited by hand</li>
-</ul>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/background_lines.png" width=100%></p>
 </section>
 <section id="background-example-3" class="slide level1 normal_slide">
 <h1 class="normal_slide">Background Example</h1>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/background_missing.png" width=100%></p>
+</section>
+<section id="background-example-4" class="slide level1 normal_slide">
+<h1 class="normal_slide">Background Example</h1>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/background_missing_2.png" width=100%></p>
+</section>
+<section id="background-example-5" class="slide level1 normal_slide">
+<h1 class="normal_slide">Background Example</h1>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/background_missing_2_fixed.jpg" width=100%></p>
+</section>
+<section id="background-example-6" class="slide level1 normal_slide">
+<h1 class="normal_slide">Background Example</h1>
+<pre><code>sum_price = SUM(orders_small[price])</code></pre>
+<pre><code>distinct_months = DISTINCTCOUNT(orders_small[month_date])</code></pre>
+<pre><code>monthly_average = DIVIDE([sum_price], [distinct_months])</code></pre>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/background_table.png" width=100%></p>
+</section>
+<section id="end-product" class="slide level1 normal_slide">
+<h1 class="normal_slide">End Product</h1>
 <ul>
-<li>Example with missing months correct table</li>
+<li>Line graphs by product over time</li>
+<li>Price</li>
+<li>Number of orders</li>
+<li>Number of distinct customers</li>
+<li>Filter by product and month</li>
+<li>Fill in zeros for sales when product is available</li>
 </ul>
 </section>
-<section id="power-bi-setup" class="slide level1 normal_slide">
-<h1 class="normal_slide">Power BI Setup</h1>
+<section id="basic-strategies" class="slide level1 section_slide center">
+<h1 class="section_slide center">Basic Strategies</h1>
+</section>
+<section id="basic-strategies-1" class="slide level1 normal_slide">
+<h1 class="normal_slide">Basic Strategies</h1>
 <ul>
-<li>Show data and connections</li>
+<li>Show missing items</li>
+</ul>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/show_items_with_no_data.png" width=50%></p>
+<ul>
+<li>Doesn’t work in this example</li>
 </ul>
 </section>
-<section id="show-missing-items" class="slide level1 normal_slide">
-<h1 class="normal_slide">Show missing items</h1>
+<section id="basic-strategies-2" class="slide level1 normal_slide">
+<h1 class="normal_slide">Basic Strategies</h1>
+<pre><code>sum_price_zero = SUM(orders_small[price]) + 0</code></pre>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/sum_price_zero.png" width=100%></p>
 <ul>
-<li>Example (demo)</li>
+<li>Doesn’t fix table</li>
+</ul>
+</section>
+<section id="basic-strategies-3" class="slide level1 normal_slide">
+<h1 class="normal_slide">Basic Strategies</h1>
+<ul>
+<li>Fix the math</li>
+</ul>
+<pre><code>monthly_average = DIVIDE([sum_price], 12)</code></pre>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/fix_math_table.png" width=100%></p>
+<p>– Doesn’t fix graph</p>
+</section>
+<section id="basic-strategies-4" class="slide level1 normal_slide">
+<h1 class="normal_slide">Basic Strategies</h1>
+<ul>
+<li>Clean the data</li>
+<li>Import monthly data</li>
+<li>Import zero</li>
+</ul>
+</section>
+<section id="basic-strategies-5" class="slide level1 normal_slide">
+<h1 class="normal_slide">Basic Strategies</h1>
+<ul>
+<li>Tend to work easily</li>
+<li>But tend to not be extendable</li>
+</ul>
+</section>
+<section id="better-strategies" class="slide level1 normal_slide">
+<h1 class="normal_slide">Better Strategies</h1>
+<ul>
+<li>Calendar Table Setup</li>
 </ul>
 </section>
 <section id="calendar-table-specific-dates" class="slide level1 normal_slide">
@@ -508,22 +581,37 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </ul>
 </div>
 </section>
-<section id="calendar-table-specific-dates-1" class="slide level1 normal_slide">
-<h1 class="normal_slide">Calendar Table (Specific Dates)</h1>
-<pre><code>Month Table 1 = 
-var CalendarDates = 
- GENERATE ( CALENDAR(
-  DATE(2019, 01, 01),
-  DATE(2019, 12, 01)),
- ROW (
-  &quot;Month&quot;, DATE(YEAR( [Date] ), MONTH ( [Date] ), 01) )
- )</code></pre>
+<section id="calendar-table" class="slide level1 normal_slide">
+<h1 class="normal_slide">Calendar Table</h1>
+<pre><code>cal_table = CALENDAR(
+  DATE(2020, 01, 01),
+  DATE(2020, 12, 31))</code></pre>
+<pre><code>cal_table = CALENDAR(
+  DATE(YEAR(TODAY()) - 1, 01, 01),
+  DATE(YEAR(TODAY()) - 1, 12, 31))</code></pre>
+<pre><code>cal_table = CALENDAR(
+  MIN(orders_small[date]),
+  MAX(orders_small[date]))</code></pre>
+</section>
+<section id="calendar-table-1" class="slide level1 normal_slide">
+<h1 class="normal_slide">Calendar Table</h1>
+<ul>
+<li>Need image of cal table here</li>
+</ul>
+</section>
+<section id="calendar-table-2" class="slide level1 normal_slide">
+<h1 class="normal_slide">Calendar Table</h1>
+<p><img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+  src="images/cal_table.png" width=100%></p>
+<ul>
+<li>Star schema</li>
+</ul>
 </section>
     </div>
   </div>
 
-  <script src="pres_template_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
-  <script src="pres_template_files/reveal.js-3.3.0.1/js/reveal.js"></script>
+  <script src="presentation_files/reveal.js-3.3.0.1/lib/js/head.min.js"></script>
+  <script src="presentation_files/reveal.js-3.3.0.1/js/reveal.js"></script>
 
   <script>
 
@@ -549,7 +637,7 @@ var CalendarDates =
 
         // Optional reveal.js plugins
         dependencies: [
-          { src: 'pres_template_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
+          { src: 'presentation_files/reveal.js-3.3.0.1/plugin/notes/notes.js', async: true },
         ]
       });
     </script>
