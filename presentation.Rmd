@@ -23,6 +23,10 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Tyler Bradley
 
+<aside class="notes">
+Hey, I'm Tyler Bradley. I currently work for a health care organization in Asheville. This presentation comes from a project I worked on that involved solving these issues with missing values in Power BI. For this presentation, I'm assuming you have some familiarity with Power BI. So, I won't walk through all the basics like pulling in data, but basically start after the beginning steps.
+</aside>
+
 # Setup {.normal_slide}
 <div style="margin-top: 7%; margin-bottom: 10%;">
 - Background Example
@@ -37,6 +41,10 @@ Tyler Bradley
 - Polishing
 </div>
 
+<aside class="notes">
+For today's setup we'll cover a background example that explains the issues, go through some basic strategies that might solve your problem, a better strategy that's more work but a lot more robust, and then some additions options for polishing the dashboard.
+</aside>
+
 # Background Example {.normal_slide}
 <div style="margin-top: 7%;">
 - Start out with some data to graph
@@ -45,7 +53,7 @@ Tyler Bradley
   src="images/background_base.PNG" width=75%>
 
 <aside class="notes">
-You have an orders table. Each row is an order that contains the order number, the product that was sold, a customer id, the date, and the dollar amount. The goal here is to get information on sales over time for each product.
+You have an orders table. Each row is an order that contains the order number, the product that was sold, a customer id, the date, and the dollar amount. The goal here is to get information on sales over time for each product. So we basically need to sum dollar amount by date.
 </aside>
 
 # Background Example {.normal_slide}
@@ -58,7 +66,7 @@ month = STARTOFMONTH(orders_small[date])
   src="images/background_month.PNG" width=75%>
 
 <aside class="notes">
-We can add in some DAX code to create a new column for the month of each order.
+Showing the data by day will be too granular, so we want to get it into months. We can add in some DAX code to create a new column for the month of each order. We'll also just use date as a date hierarchy.
 </aside>
 
 # Background Example {.normal_slide}
@@ -78,7 +86,7 @@ This graph uses the month column we just created. You can see there are some mis
 </div>
 
 <aside class="notes">
-This graph uses the date column from the data. You still see the some missing values for the dark blue line, but now the orange line has missing values. The other graph was just connecting them across January to November.
+This graph uses the date column from the data at the month level. You still see the some missing values for the dark blue line, but now the orange line has missing values. The other graph was just connecting them across January to November.
 </aside>
 
 # Background Example {.normal_slide}
@@ -150,6 +158,10 @@ You can also see that this can mess up any calculations. In this example, the mo
 - Doesn't work in this example
 </div>
 
+<aside class="notes">
+You can just add zero to the end of measures.
+</aside>
+
 # Basic Strategies {.normal_slide}
 <div class="fragment" style="margin-top: 7%; margin-bottom: 5%;">
 ```{}
@@ -163,6 +175,10 @@ sum_amount_zero = SUM(orders_small[dollar_amount]) + 0
 <div class="fragment">
 - Doesn't fix table
 </div>
+
+<aside class="notes">
+You can just fix the math if you know it's a constant.
+</aside>
 
 # Basic Strategies {.normal_slide}
 <div class="fragment" style="margin-top: 7%;">
@@ -203,6 +219,10 @@ monthly_average = DIVIDE([sum_amount], 12)
 - But tend to not be extendable
 </div>
 
+<aside class="notes">
+You can mix and match these strategies, but that can be annoying.
+</aside>
+
 # Better Strategy {.section_slide .center}
 
 # Setup with Bigger Dataset {.normal_slide}
@@ -234,7 +254,7 @@ monthly_average = DIVIDE([sum_amount], 12)
 
 # Calendar Table {.normal_slide}
 <div class="fragment" style="margin-top: 10%; margin-bottom: 20%;">
-- Table created in Power BI that contains all the dates you need and associated information.
+- Table created in Power BI that contains all the dates you need and associated information, using the CALENDAR function.
 </div>
 <div class="fragment">
 - Three examples
@@ -294,13 +314,17 @@ cal_month = STARTOFMONTH(cal_table[DATE])
 - Important dimensions on the outside
 <div>
 
+<aside class="notes">
+Normally a 'suggestion' from Microsoft, but often a great idea.
+</aside>
+
 # Star Schema {.normal_slide}
 <div style="margin-top: 7%; margin-bottom: 5%;">
 ```{}
 product = SUMMARIZECOLUMNS(orders_big[product])
 ```
 </div>
-<div style="margin-bottom: 5%;">
+<div class="fragment" style="margin-bottom: 5%;">
 ```{}
 customer = SUMMARIZECOLUMNS(orders_big[customer_id])
 ```
@@ -356,6 +380,10 @@ cal_table[cal_month], 'product'[product])
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_zeros_added_1.PNG" width=40%>  
 
+<aside class="notes">
+Basically a full join between calendar months and products. You can see ShowAll_ColumnName cal_month and product, the Table is the SUMMARIZECOLUMNS, the GroupBy_ColumnName is the same as the ShowAll_ColumnName, no filters for now.
+</aside>
+
 # ADDMISSINGITEMS() {.normal_slide}
 <div style="margin-top: 7%; margin-bottom: 7%;">
 ```{}
@@ -381,10 +409,12 @@ cal_table[cal_month], 'product'[product]),
 <div style="margin-top: 7%;">
 ::: {.container}
 :::: {.col}
-<img src="images/high_density_sampling.PNG" width=35%>
+<img style="display: block; margin-left: auto; margin-right:auto;" src="images/high_density_sampling.PNG" width=35%>
 ::::
 :::: {.col}
+<div style="margin-top: 30%;">
 - Might need to turn this off
+</div>  
 ::::
 :::
 </div>
@@ -413,6 +443,10 @@ cal_table[cal_month], 'product'[product]),
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_dates_connection.PNG" width=60%> 
 </div>
+
+<aside class="notes">
+There are multiple rows per product for cases when there are jumps in the dates.
+</aside>
 
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
@@ -450,6 +484,10 @@ cal_table[cal_month], 'product'[product], product_availability),
   src="images/product_availability_filter.PNG" width=100%> 
 </div>  
 
+<aside class="notes">
+Same has previous one, but with product_availability used as a filter.
+</aside>
+
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
@@ -462,11 +500,107 @@ cal_table[cal_month], 'product'[product], product_availability),
   src="images/product_availability_filter_graph_fixed.PNG" width=100%> 
 </div>  
 
+<aside class="notes">
+X axis needs to be set to Categorical
+</aside>
+
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_filter_table.PNG" width=100%> 
 </div>  
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 10%; margin-bottom: 20%;">
+- What if you want the graph to be continuous or want all the months with missing for unavailable?
+</div>  
+<div>
+- Let's backtrack a little bit...
+</div>  
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 5%;">
+```{}
+product_zeros = SUMMARIZECOLUMNS(orders_big[product])
+```
+</div>
+<div style="margin-bottom: 5%;">
+```{}
+cal_table_month = 
+var CalendarDates = 
+    GENERATE( CALENDAR(DATE(2020, 01, 01), 
+                       DATE(2020, 12, 31)),
+    ROW("month", DATE(YEAR( [Date] ), MONTH( [Date] ), 01)))
+return
+SUMMARIZE(CalendarDates, [month])
+```
+</div>
+<div>
+```{}
+product_availability = FILTER(
+CROSSJOIN(cal_table_month, product_dates), 
+  cal_table_month[month] >= product_dates[start_month] && 
+    cal_table_month[month] <= product_dates[end_month])
+```
+</div>
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_connection_2.PNG" width=100%>  
+</div>  
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 5%;">
+```{}
+available = LOOKUPVALUE(product_availability[product], 
+product_availability[month], orders_zeros_added[cal_month], 
+product_availability[product], orders_zeros_added[product])
+```
+</div>
+<div style="margin-bottom: 5%;">
+```{}
+amount_filled_missing = IF(ISBLANK(orders_zeros_added[available]), 
+  BLANK(), orders_zeros_added[amount filled])
+```
+</div>
+<div>
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_filter_2.PNG" width=50%>  
+</div>
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_filter_graph_fixed_2.PNG" width=100%>  
+</div>
+
+<aside class="notes">
+Need to use cal_table_month for axis.
+</aside>
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_filter_table_2.PNG" width=100%>  
+</div>
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+- BLANK is not like SQL NULL
+</div>
+<div class="fragment" style="margin-bottom: 5%;">
+- Converts to 0 in sums and subtractions
+- Stays BLANK in divisions and multiplication
+</div>
+<div class="fragment" style="margin-bottom: 5%; text-align: center">
+1 - (A/B) = (B/B) - (A/B) = (B - A)/B
+</div>
+<div class="fragment" style="margin-bottom: 5%;">
+- If B is BLANK
+- Left side = 1
+- Right side = BLANK
+</div>
 
 # Polishing {.normal_slide}
 <div style="margin-top: 7%; margin-bottom: 15%;">
@@ -555,8 +689,11 @@ cal_table[cal_month], 'product'[product], product_availability),
 <div style="margin-top: 7%; margin-bottom: 15%;">
 - Just use the built in filters for the table
 </div>
-<div class="fragment">
+<div class="fragment" style="margin-bottom: 15%;">
 - Use Star Schema again (will need to create new tables)
+</div>
+<div class="fragment">
+- That's pretty much it.
 </div>
 
 # End {.title_slide .center}

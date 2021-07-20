@@ -10,6 +10,25 @@ cal_table[cal_month], 'product'[product]),
 product_availability = FILTER(CROSSJOIN(cal_table, product_dates), 
 cal_table[cal_month] >= product_dates[start_month] && cal_table[cal_month] <= product_dates[end_month])
 
+cal_table_month = 
+var CalendarDates = 
+    GENERATE( CALENDAR(DATE(2020, 01, 01), 
+                       DATE(2020, 12, 31)),
+    ROW("month", DATE(YEAR( [Date] ), MONTH( [Date] ), 01)))
+return
+SUMMARIZE(CalendarDates, [month])
+
+product_zeros = SUMMARIZECOLUMNS(orders_big[product])
+
+available = LOOKUPVALUE(product_availability[product], 
+product_availability[month], orders_zeros_added[cal_month], 
+product_availability[product], orders_zeros_added[product])
+
+amount_filled_missing = IF(ISBLANK(orders_zeros_added[available]), BLANK(), orders_zeros_added[amount filled])
+
+product_availability = FILTER(CROSSJOIN(cal_table_month, product_dates), 
+cal_table_month[month] >= product_dates[start_month] && cal_table_month[month] <= product_dates[end_month])
+
 orders_zeros_added = CALCULATETABLE(ADDCOLUMNS(ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
 SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], "amount", SUM(orders_big[dollar_amount]), "customers", DISTINCTCOUNT(orders_big[customer_id])), 
 cal_table[cal_month], 'product'[product], product_availability),
