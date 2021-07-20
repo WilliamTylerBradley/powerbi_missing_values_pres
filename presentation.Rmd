@@ -1,6 +1,4 @@
 ---
-title: ""
-
 output: 
   revealjs::revealjs_presentation:
     incremental: false
@@ -44,7 +42,7 @@ Tyler Bradley
 - Start out with some data to graph
 </div>
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_base.png" width=75%>
+  src="images/background_base.PNG" width=75%>
 
 <aside class="notes">
 You have an orders table. Each row is an order that contains the order number, the product that was sold, a customer id, the date, and the dollar amount. The goal here is to get information on sales over time for each product.
@@ -57,7 +55,7 @@ month = STARTOFMONTH(orders_small[date])
 ```
 </div>
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_month.png" width=75%>
+  src="images/background_month.PNG" width=75%>
 
 <aside class="notes">
 We can add in some DAX code to create a new column for the month of each order.
@@ -66,7 +64,7 @@ We can add in some DAX code to create a new column for the month of each order.
 # Background Example {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_lines.png" width=100%>
+  src="images/background_lines.PNG" width=100%>
 </div>
 
 <aside class="notes">
@@ -76,7 +74,7 @@ This graph uses the month column we just created. You can see there are some mis
 # Background Example {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_missing.png" width=100%>
+  src="images/background_missing.PNG" width=100%>
 </div>
 
 <aside class="notes">
@@ -86,7 +84,7 @@ This graph uses the date column from the data. You still see the some missing va
 # Background Example {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_missing_2.png" width=100%>
+  src="images/background_missing_2.PNG" width=100%>
 </div>  
 
 <aside class="notes">
@@ -96,7 +94,7 @@ At a close look at the graph you see that there are three products that sale at 
 # Background Example {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_missing_2_fixed.png" width=100%>
+  src="images/background_missing_2_fixed.PNG" width=100%>
 </div>
 
 <aside class="notes">
@@ -117,7 +115,7 @@ monthly_average = DIVIDE([sum_amount], [distinct_months])
 </div>
 
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_table.png" width=100%>
+  src="images/background_table.PNG" width=100%>
 
 <aside class="notes">
 You can also see that this can mess up any calculations. In this example, the monthly_average is wrong because distinct_months is incorrect.
@@ -146,7 +144,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 - Show missing items
 
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/show_items_with_no_data.png" width=50%>
+  src="images/show_items_with_no_data.PNG" width=50%>
 </div>
 <div class="fragment">
 - Doesn't work in this example
@@ -160,7 +158,7 @@ sum_amount_zero = SUM(orders_small[dollar_amount]) + 0
 <div>
 <div class="fragment" style="margin-bottom: 5%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/sum_amount_zero.png" width=100%>
+  src="images/sum_amount_zero.PNG" width=100%>
 <div>
 <div class="fragment">
 - Doesn't fix table
@@ -175,10 +173,10 @@ monthly_average = DIVIDE([sum_amount], 12)
 <div style="margin-bottom: 5%;">
 ::: {.container}
 :::: {.col}
-<img class="fragment" src="images/background_table.png" width=100%>
+<img class="fragment" src="images/background_table.PNG" width=100%>
 ::::
 :::: {.col}
-<img class="fragment" src="images/fix_math_table.png" width=100%>
+<img class="fragment" src="images/fix_math_table.PNG" width=100%>
 ::::
 :::
 </div>
@@ -210,7 +208,7 @@ monthly_average = DIVIDE([sum_amount], 12)
 # Setup with Bigger Dataset {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_big.png" width=100%>
+  src="images/orders_big.PNG" width=100%>
 </div>  
 
 # End Product {.normal_slide}
@@ -271,13 +269,13 @@ cal_table = CALENDAR(
 cal_month = STARTOFMONTH(cal_table[DATE])
 ```
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/cal_table.png">
+  src="images/cal_table.PNG">
 <div>  
   
 # Calendar Table {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/cal_table_connection.png" width=100%>  
+  src="images/cal_table_connection.PNG" width=100%>  
 </div>  
 
 # Better Strategy {.normal_slide}
@@ -309,7 +307,7 @@ customer = SUMMARIZECOLUMNS(orders_big[customer_id])
 </div>
 <div class="fragment">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/star_schema.png" width=100%>  
+  src="images/star_schema.PNG" width=100%>  
 </div>  
 
 # Better Strategy {.normal_slide}
@@ -356,7 +354,7 @@ cal_table[cal_month], 'product'[product])
 ```
 </div>
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_zeros_added_1.png" width=40%>  
+  src="images/orders_zeros_added_1.PNG" width=40%>  
 
 # ADDMISSINGITEMS() {.normal_slide}
 <div style="margin-top: 7%; margin-bottom: 7%;">
@@ -371,19 +369,19 @@ cal_table[cal_month], 'product'[product]),
 ```
 </div>
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_zeros_added_2.png" width=40%>  
+  src="images/orders_zeros_added_2.PNG" width=40%>  
 
 # ADDMISSINGITEMS() {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/amount_filled_1.png" width=100%>  
+  src="images/amount_filled_1.PNG" width=100%>  
 </div>  
 
 # High Density Sampling {.normal_slide}
 <div style="margin-top: 7%;">
 ::: {.container}
 :::: {.col}
-<img src="images/high_density_sampling.png" width=35%>
+<img src="images/high_density_sampling.PNG" width=35%>
 ::::
 :::: {.col}
 - Might need to turn this off
@@ -394,7 +392,7 @@ cal_table[cal_month], 'product'[product]),
 # ADDMISSINGITEMS() {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/average_amount_1.png" width=100%> 
+  src="images/average_amount_1.PNG" width=100%> 
 </div>  
 
 # Polishing {.section_slide .center}
@@ -407,13 +405,13 @@ cal_table[cal_month], 'product'[product]),
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_dates_table.png" width=80%> 
+  src="images/product_dates_table.PNG" width=80%> 
 </div>
 
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_dates_connection.png" width=60%> 
+  src="images/product_dates_connection.PNG" width=60%> 
 </div>
 
 # Filter Product Availability {.normal_slide}
@@ -427,13 +425,13 @@ FILTER(CROSSJOIN(cal_table, product),
 </div>
 <div>
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_table.png" width=100%> 
+  src="images/product_availability_table.PNG" width=100%> 
 </div>  
 
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_connection.png" width=100%> 
+  src="images/product_availability_connection.PNG" width=100%> 
 </div>  
 
 # Filter Product Availability {.normal_slide}
@@ -449,25 +447,25 @@ cal_table[cal_month], 'product'[product], product_availability),
 </div>
 <div>
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_filter.png" width=100%> 
+  src="images/product_availability_filter.PNG" width=100%> 
 </div>  
 
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_filter_graph.png" width=100%> 
+  src="images/product_availability_filter_graph.PNG" width=100%> 
 </div>  
 
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_filter_graph_fixed.png" width=100%> 
+  src="images/product_availability_filter_graph_fixed.PNG" width=100%> 
 </div>  
 
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_filter_table.png" width=100%> 
+  src="images/product_availability_filter_table.PNG" width=100%> 
 </div>  
 
 # Polishing {.normal_slide}
@@ -494,19 +492,19 @@ cal_table[cal_month], 'product'[product], product_availability),
 </div>
 <div>
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/add_customers.png" width=100%> 
+  src="images/add_customers.PNG" width=100%> 
 </div>  
 
 # Customers {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/customers_graph.png" width=100%>   
+  src="images/customers_graph.PNG" width=100%>   
 </div>  
 
 # Customers {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/customers_table.png" width=100%>
+  src="images/customers_table.PNG" width=100%>
 </div>  
 
 # Orders {.normal_slide}
@@ -527,19 +525,19 @@ cal_table[cal_month], 'product'[product], product_availability),
 </div>
 <div>
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/add_orders.png" width=100%> 
+  src="images/add_orders.PNG" width=100%> 
 </div>  
 
 # Orders {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_graph.png" width=100%>   
+  src="images/orders_graph.PNG" width=100%>   
 </div>  
 
 # Orders {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_table.png" width=100%>  
+  src="images/orders_table.PNG" width=100%>  
 </div>  
 
 # Polishing {.normal_slide}

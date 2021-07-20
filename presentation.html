@@ -485,7 +485,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 </ul>
 </div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_base.png" width=75%></p>
+  src="images/background_base.PNG" width=75%></p>
 <aside class="notes">
 You have an orders table. Each row is an order that contains the order number, the product that was sold, a customer id, the date, and the dollar amount. The goal here is to get information on sales over time for each product.
 </aside>
@@ -496,7 +496,7 @@ You have an orders table. Each row is an order that contains the order number, t
 <pre><code>month = STARTOFMONTH(orders_small[date])</code></pre>
 </div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_month.png" width=75%></p>
+  src="images/background_month.PNG" width=75%></p>
 <aside class="notes">
 We can add in some DAX code to create a new column for the month of each order.
 </aside>
@@ -505,7 +505,7 @@ We can add in some DAX code to create a new column for the month of each order.
 <h1 class="normal_slide">Background Example</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_lines.png" width=100%></p>
+  src="images/background_lines.PNG" width=100%></p>
 </div>
 <aside class="notes">
 This graph uses the month column we just created. You can see there are some missing values at the start and end of the dark blue line. The orange line is also suspiciously straight.
@@ -515,7 +515,7 @@ This graph uses the month column we just created. You can see there are some mis
 <h1 class="normal_slide">Background Example</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_missing.png" width=100%></p>
+  src="images/background_missing.PNG" width=100%></p>
 </div>
 <aside class="notes">
 This graph uses the date column from the data. You still see the some missing values for the dark blue line, but now the orange line has missing values. The other graph was just connecting them across January to November.
@@ -525,7 +525,7 @@ This graph uses the date column from the data. You still see the some missing va
 <h1 class="normal_slide">Background Example</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_missing_2.png" width=100%></p>
+  src="images/background_missing_2.PNG" width=100%></p>
 </div>
 <aside class="notes">
 At a close look at the graph you see that there are three products that sale at different time of the year.
@@ -535,7 +535,7 @@ At a close look at the graph you see that there are three products that sale at 
 <h1 class="normal_slide">Background Example</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_missing_2_fixed.png" width=100%></p>
+  src="images/background_missing_2_fixed.PNG" width=100%></p>
 </div>
 <aside class="notes">
 What we really want to see are all the lines filled in down to zero.
@@ -549,7 +549,7 @@ What we really want to see are all the lines filled in down to zero.
 <pre><code>monthly_average = DIVIDE([sum_amount], [distinct_months])</code></pre>
 </div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_table.png" width=100%></p>
+  src="images/background_table.PNG" width=100%></p>
 <aside class="notes">
 You can also see that this can mess up any calculations. In this example, the monthly_average is wrong because distinct_months is incorrect.
 </aside>
@@ -589,7 +589,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 <li>Show missing items</li>
 </ul>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/show_items_with_no_data.png" width=50%></p>
+  src="images/show_items_with_no_data.PNG" width=50%></p>
 </div>
 <div class="fragment">
 <ul>
@@ -604,7 +604,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 <div>
 <div class="fragment" style="margin-bottom: 5%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/sum_amount_zero.png" width=100%>
+  src="images/sum_amount_zero.PNG" width=100%>
 <div>
 <div class="fragment">
 <ul>
@@ -671,7 +671,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 <h1 class="normal_slide">Setup with Bigger Dataset</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_big.png" width=100%></p>
+  src="images/orders_big.PNG" width=100%></p>
 </div>
 </section>
 <section id="end-product-1" class="slide level1 normal_slide">
@@ -743,7 +743,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 <div style="margin-top: 7%;">
 <pre><code>cal_month = STARTOFMONTH(cal_table[DATE])</code></pre>
 <img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/cal_table.png">
+  src="images/cal_table.PNG">
 <div>
 
 </section>
@@ -751,7 +751,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 <h1 class="normal_slide">Calendar Table</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/cal_table_connection.png" width=100%></p>
+  src="images/cal_table_connection.PNG" width=100%></p>
 </div>
 </section>
 <section id="better-strategy-2" class="slide level1 normal_slide">
@@ -791,7 +791,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 </div>
 <div class="fragment">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/star_schema.png" width=100%></p>
+  src="images/star_schema.PNG" width=100%></p>
 </div>
 </section>
 <section id="better-strategy-3" class="slide level1 normal_slide">
@@ -859,7 +859,7 @@ SUMMARIZECOLUMNS(cal_table[cal_month], &#39;product&#39;[product],
 cal_table[cal_month], &#39;product&#39;[product])</code></pre>
 </div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_zeros_added_1.png" width=40%></p>
+  src="images/orders_zeros_added_1.PNG" width=40%></p>
 </section>
 <section id="addmissingitems-3" class="slide level1 normal_slide">
 <h1 class="normal_slide">ADDMISSINGITEMS()</h1>
@@ -873,13 +873,13 @@ cal_table[cal_month], &#39;product&#39;[product]),
 &quot;amount filled&quot;, IF(ISBLANK([amount]), 0, [amount])))</code></pre>
 </div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_zeros_added_2.png" width=40%></p>
+  src="images/orders_zeros_added_2.PNG" width=40%></p>
 </section>
 <section id="addmissingitems-4" class="slide level1 normal_slide">
 <h1 class="normal_slide">ADDMISSINGITEMS()</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/amount_filled_1.png" width=100%></p>
+  src="images/amount_filled_1.PNG" width=100%></p>
 </div>
 </section>
 <section id="high-density-sampling" class="slide level1 normal_slide">
@@ -901,7 +901,7 @@ cal_table[cal_month], &#39;product&#39;[product]),
 <h1 class="normal_slide">ADDMISSINGITEMS()</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/average_amount_1.png" width=100%></p>
+  src="images/average_amount_1.PNG" width=100%></p>
 </div>
 </section>
 <section id="polishing" class="slide level1 section_slide center">
@@ -919,14 +919,14 @@ cal_table[cal_month], &#39;product&#39;[product]),
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_dates_table.png" width=80%></p>
+  src="images/product_dates_table.PNG" width=80%></p>
 </div>
 </section>
 <section id="filter-product-availability-1" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_dates_connection.png" width=60%></p>
+  src="images/product_dates_connection.PNG" width=60%></p>
 </div>
 </section>
 <section id="filter-product-availability-2" class="slide level1 normal_slide">
@@ -939,14 +939,14 @@ FILTER(CROSSJOIN(cal_table, product),
 </div>
 <div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_table.png" width=100%></p>
+  src="images/product_availability_table.PNG" width=100%></p>
 </div>
 </section>
 <section id="filter-product-availability-3" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_connection.png" width=100%></p>
+  src="images/product_availability_connection.PNG" width=100%></p>
 </div>
 </section>
 <section id="filter-product-availability-4" class="slide level1 normal_slide">
@@ -961,28 +961,28 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 </div>
 <div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_filter.png" width=100%></p>
+  src="images/product_availability_filter.PNG" width=100%></p>
 </div>
 </section>
 <section id="filter-product-availability-5" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_filter_graph.png" width=100%></p>
+  src="images/product_availability_filter_graph.PNG" width=100%></p>
 </div>
 </section>
 <section id="filter-product-availability-6" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_filter_graph_fixed.png" width=100%></p>
+  src="images/product_availability_filter_graph_fixed.PNG" width=100%></p>
 </div>
 </section>
 <section id="filter-product-availability-7" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/product_availability_filter_table.png" width=100%></p>
+  src="images/product_availability_filter_table.PNG" width=100%></p>
 </div>
 </section>
 <section id="polishing-2" class="slide level1 normal_slide">
@@ -1013,21 +1013,21 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 </div>
 <div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/add_customers.png" width=100%></p>
+  src="images/add_customers.PNG" width=100%></p>
 </div>
 </section>
 <section id="customers-1" class="slide level1 normal_slide">
 <h1 class="normal_slide">Customers</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/customers_graph.png" width=100%></p>
+  src="images/customers_graph.PNG" width=100%></p>
 </div>
 </section>
 <section id="customers-2" class="slide level1 normal_slide">
 <h1 class="normal_slide">Customers</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/customers_table.png" width=100%></p>
+  src="images/customers_table.PNG" width=100%></p>
 </div>
 </section>
 <section id="orders" class="slide level1 normal_slide">
@@ -1047,21 +1047,21 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 </div>
 <div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/add_orders.png" width=100%></p>
+  src="images/add_orders.PNG" width=100%></p>
 </div>
 </section>
 <section id="orders-1" class="slide level1 normal_slide">
 <h1 class="normal_slide">Orders</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_graph.png" width=100%></p>
+  src="images/orders_graph.PNG" width=100%></p>
 </div>
 </section>
 <section id="orders-2" class="slide level1 normal_slide">
 <h1 class="normal_slide">Orders</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
-  src="images/orders_table.png" width=100%></p>
+  src="images/orders_table.PNG" width=100%></p>
 </div>
 </section>
 <section id="polishing-3" class="slide level1 normal_slide">
