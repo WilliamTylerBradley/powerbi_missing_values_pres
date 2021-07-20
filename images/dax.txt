@@ -1,0 +1,26 @@
+orders_zeros_added = ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], "amount", SUM(orders_big[dollar_amount])), 
+cal_table[cal_month], 'product'[product])
+
+orders_zeros_added = CALCULATETABLE(ADDCOLUMNS(ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], "amount", SUM(orders_big[dollar_amount])), 
+cal_table[cal_month], 'product'[product]),
+"amount filled", IF(ISBLANK([amount]), 0, [amount])))
+
+product_availability = FILTER(CROSSJOIN(cal_table, product_dates), 
+cal_table[cal_month] >= product_dates[start_month] && cal_table[cal_month] <= product_dates[end_month])
+
+orders_zeros_added = CALCULATETABLE(ADDCOLUMNS(ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], "amount", SUM(orders_big[dollar_amount]), "customers", DISTINCTCOUNT(orders_big[customer_id])), 
+cal_table[cal_month], 'product'[product], product_availability),
+"amount filled", IF(ISBLANK([amount]), 0, [amount]), "customers filled", IF(ISBLANK([customers]), 0, [customers])))
+
+orders_zeros_added = CALCULATETABLE(ADDCOLUMNS(ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], "amount", SUM(orders_big[dollar_amount]), "customers", DISTINCTCOUNT(orders_big[customer_id]), "orders", DISTINCTCOUNT(orders_big[order_number])), 
+cal_table[cal_month], 'product'[product], product_availability),
+"amount filled", IF(ISBLANK([amount]), 0, [amount]), "customers filled", IF(ISBLANK([customers]), 0, [customers]), "orders filled", IF(ISBLANK([orders]), 0, [orders])))
+
+orders_zeros_added_2 = CALCULATETABLE(ADDCOLUMNS(ADDMISSINGITEMS(customer[customer_id], 'product'[product], 
+SUMMARIZECOLUMNS(customer[customer_id], 'product'[product], "amount", SUM(orders_big[dollar_amount])), 
+customer[customer_id], 'product'[product]),
+"amount filled", IF(ISBLANK([amount]), 0, [amount])))

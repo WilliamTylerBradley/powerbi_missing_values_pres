@@ -25,249 +25,540 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Tyler Bradley
 
+# Setup {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 10%;">
+- Background Example
+</div>
+<div style="margin-bottom: 10%;">
+- Basic Strategies
+</div>
+<div style="margin-bottom: 10%;">
+- Better Strategy
+</div>
+<div>
+- Polishing
+</div>
+
 # Background Example {.normal_slide}
-
-- Start out with base data to graph
-
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+<div style="margin-top: 7%;">
+- Start out with some data to graph
+</div>
+<img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/background_base.png" width=75%>
 
+<aside class="notes">
+You have an orders table. Each row is an order that contains the order number, the product that was sold, a customer id, the date, and the dollar amount. The goal here is to get information on sales over time for each product.
+</aside>
+
 # Background Example {.normal_slide}
-<div style="margin-top: 7%; margin-bottom: 15%;">
+<div style="margin-top: 7%;">
 ```{}
-month_date = STARTOFMONTH(orders_small[date])
+month = STARTOFMONTH(orders_small[date])
 ```
 </div>
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+<img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/background_month.png" width=75%>
 
-# Background Example {.normal_slide}
+<aside class="notes">
+We can add in some DAX code to create a new column for the month of each order.
+</aside>
 
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+# Background Example {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/background_lines.png" width=100%>
+</div>
+
+<aside class="notes">
+This graph uses the month column we just created. You can see there are some missing values at the start and end of the dark blue line. The orange line is also suspiciously straight.
+</aside>
 
 # Background Example {.normal_slide}
-
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/background_missing.png" width=100%>
-  
-# Background Example {.normal_slide}
+</div>
 
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+<aside class="notes">
+This graph uses the date column from the data. You still see the some missing values for the dark blue line, but now the orange line has missing values. The other graph was just connecting them across January to November.
+</aside>
+
+# Background Example {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/background_missing_2.png" width=100%>
+</div>  
+
+<aside class="notes">
+At a close look at the graph you see that there are three products that sale at different time of the year.
+</aside>
 
 # Background Example {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/background_missing_2_fixed.png" width=100%>
+</div>
 
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
-  src="images/background_missing_2_fixed.jpg" width=100%>
+<aside class="notes">
+What we really want to see are all the lines filled in down to zero.
+</aside>
 
 # Background Example {.normal_slide}
+<div style="margin-top: 7%;">
+```{}
+sum_amount = SUM(orders_small[dollar_amount])
+```
+```{}
+distinct_months = DISTINCTCOUNT(orders_small[month])
+```
+```{}
+monthly_average = DIVIDE([sum_amount], [distinct_months])
+```
+</div>
 
-```{}
-sum_price = SUM(orders_small[price])
-```
-```{}
-distinct_months = DISTINCTCOUNT(orders_small[month_date])
-```
-```{}
-monthly_average = DIVIDE([sum_price], [distinct_months])
-```
-
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+<img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/background_table.png" width=100%>
 
-# End Product {.normal_slide}
+<aside class="notes">
+You can also see that this can mess up any calculations. In this example, the monthly_average is wrong because distinct_months is incorrect.
+</aside>
 
+# End Product {.normal_slide}
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
 - Line graphs and tables by product over time
-- Price
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+- Dollar amount
 - Number of orders
 - Number of distinct customers
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
 - Filter by product and month
+</div>
+<div class="fragment">
 - Fill in zeros for sales when product is available
+</div>
 
 # Basic Strategies {.section_slide .center}
 
 # Basic Strategies {.normal_slide}
-
+<div class="fragment" style="margin-top: 7%; margin-bottom: 3%;">
 - Show missing items
 
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
+<img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/show_items_with_no_data.png" width=50%>
-
+</div>
+<div class="fragment">
 - Doesn't work in this example
+</div>
 
 # Basic Strategies {.normal_slide}
-
+<div class="fragment" style="margin-top: 7%; margin-bottom: 5%;">
 ```{}
-sum_price_zero = SUM(orders_small[price]) + 0
+sum_amount_zero = SUM(orders_small[dollar_amount]) + 0
 ```
-
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
-  src="images/sum_price_zero.png" width=100%>
-
+<div>
+<div class="fragment" style="margin-bottom: 5%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/sum_amount_zero.png" width=100%>
+<div>
+<div class="fragment">
 - Doesn't fix table
+</div>
 
 # Basic Strategies {.normal_slide}
-
-- Fix the math
-
+<div class="fragment" style="margin-top: 7%;">
 ```{}
-monthly_average = DIVIDE([sum_price], 12)
+monthly_average = DIVIDE([sum_amount], 12)
 ```
-
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
-  src="images/fix_math_table.png" width=100%>
-
+<div>
+<div style="margin-bottom: 5%;">
+::: {.container}
+:::: {.col}
+<img class="fragment" src="images/background_table.png" width=100%>
+::::
+:::: {.col}
+<img class="fragment" src="images/fix_math_table.png" width=100%>
+::::
+:::
+</div>
+<div class="fragment">
 - Doesn't fix graph
+</div>
 
 # Basic Strategies {.normal_slide}
-
-- Clean the data
-- Import monthly data
-- Import zero
-
-# Basic Strategies {.normal_slide}
-
-- Tend to work easily
-- But tend to not be extendable
-
-# Better Strategies {.section_slide .center}
-
-# Setup with Bigger Dataset {.normal_slide}
-
-- big_data
-
-# End Product {.normal_slide}
-
-- Line graphs and tables by product over time
-- Price
-- Number of orders
-- Number of distinct customers
-- Filter by product and month
-- Fill in zeros for sales when product is available
-
-# Better Strategies {.normal_slide}
-
-- Calendar Table Setup
-
-# Calendar Table (Specific Dates) {.normal_slide}
 <div class="fragment" style="margin-top: 7%; margin-bottom: 15%;">
-- What is this
+- Clean the data
 </div>
 <div class="fragment" style="margin-bottom: 15%;">
-- Same concept but not for dates
+- Import monthly data
+</div>
+<div class="fragment" >
+- Import zero
+</div>
+
+# Basic Strategies {.normal_slide}
+<div class="fragment" style="margin-top: 10%; margin-bottom: 20%;">
+- Tend to work easily
+</div>
+<div class="fragment" >
+- But tend to not be extendable
+</div>
+
+# Better Strategy {.section_slide .center}
+
+# Setup with Bigger Dataset {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/orders_big.png" width=100%>
+</div>  
+
+# End Product {.normal_slide}
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
+- Line graphs and tables by product over time
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+- Dollar amount
+- Number of orders
+- Number of distinct customers
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+- Filter by product and month
+</div>
+<div class="fragment">
+- Fill in zeros for sales when product is available
+</div>
+
+# Better Strategy {.normal_slide}
+<div class="fragment" style="margin-top: 7%;">
+- Calendar Table Setup
+</div>
+
+# Calendar Table {.normal_slide}
+<div class="fragment" style="margin-top: 10%; margin-bottom: 20%;">
+- Table created in Power BI that contains all the dates you need and associated information.
 </div>
 <div class="fragment">
 - Three examples
 </div>
 
 # Calendar Table {.normal_slide}
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
 ```{}
 cal_table = CALENDAR(
   DATE(2020, 01, 01),
   DATE(2020, 12, 31))
 ```
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
 ```{}
 cal_table = CALENDAR(
   DATE(YEAR(TODAY()) - 1, 01, 01),
   DATE(YEAR(TODAY()) - 1, 12, 31))
 ```
+</div>
+<div class="fragment">
 ```{}
 cal_table = CALENDAR(
   MIN(orders_small[date]),
   MAX(orders_small[date]))
 ```
+</div>
 
 # Calendar Table {.normal_slide}
-
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
-  src="images/cal_table.png" width=100%>
-  
-# Calendar Table {.normal_slide}
-
-<img style="margin-top: 5%; display: block; margin-left: auto; margin-right:auto;" 
-  src="images/cal_table_connection.png" width=100%>  
-  
-# Better Strategies {.normal_slide}
-
-- Calendar Table Setup
-
-- Star Schema
-
-# Star Schema {.normal_slide}
-
-- Main orders table in the middle
-
-- Important factors on the outside
-
-- Get better definitions
-
-# Star Schema {.normal_slide}
-
+<div style="margin-top: 7%;">
 ```{}
 cal_month = STARTOFMONTH(cal_table[DATE])
 ```
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/cal_table.png">
+<div>  
+  
+# Calendar Table {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/cal_table_connection.png" width=100%>  
+</div>  
 
+# Better Strategy {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 15%;">
+- Calendar Table Setup +
+</div>
+<div class="fragment">
+- Star Schema
+</div>
+
+# Star Schema {.normal_slide}
+<div style="margin-top: 10%; margin-bottom: 20%;">
+- Main orders table in the middle
+</div>
+<div>
+- Important dimensions on the outside
+<div>
+
+# Star Schema {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 5%;">
 ```{}
 product = SUMMARIZECOLUMNS(orders_big[product])
 ```
-
-# Star Schema {.normal_slide}
-
-- star_schema.png
-
-# Better Strategies {.normal_slide}
-
-- Calendar Table Setup
-
-- Star Schema
-
-- ADDMISSINGITEMS()
-
-# ADDMISSINGITEMS() {.normal_slide}
-
-- ShowAll_ColumnName - What you want to fill in
-- Table - Base table with missing data (orders table here)
-- GroupBy_ColumnName - What you want to fill in (same as ShowAll_ColumnName unless ROLLUP)
-- FilterTable - Filter out unneeded combinations
-
-# ADDMISSINGITEMS() {.normal_slide}
+</div>
+<div style="margin-bottom: 5%;">
 ```{}
-orders_zeros_months_added = 
-CALCULATETABLE(...)
+customer = SUMMARIZECOLUMNS(orders_big[customer_id])
 ```
+</div>
+<div class="fragment">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/star_schema.png" width=100%>  
+</div>  
+
+# Better Strategy {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 15%;">
+- Calendar Table Setup +
+</div>
+<div style="margin-top: 7%; margin-bottom: 15%;">
+- Star Schema +
+</div>
+<div class="fragment">
+- ADDMISSINGITEMS()
+</div>
 
 # ADDMISSINGITEMS() {.normal_slide}
-
-- zeros_added_table.png
+<div class="fragment" style="margin-top: 10%; margin-bottom: 15%;">
+- Adds rows with empty values to a table returned by SUMMARIZECOLUMNS. (MS Docs)
+</div>
+<div class="fragment">
+- Add the rows with empty measure values back. (dax.guide)
+<div>
 
 # ADDMISSINGITEMS() {.normal_slide}
-
-- zeros_added_graph.png
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
+- ShowAll_ColumnName - What you want to fill in
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+- Table - Base table with missing data (orders table here)
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+- GroupBy_ColumnName - What you want to fill in (same as ShowAll_ColumnName unless ROLLUP)
+</div>
+<div class="fragment">
+- FilterTable - Filter out unneeded combinations
+</div>
 
 # ADDMISSINGITEMS() {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 7%;">
+```{}
+orders_zeros_added = 
+ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], 
+  "amount", SUM(orders_big[dollar_amount])), 
+cal_table[cal_month], 'product'[product])
+```
+</div>
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/orders_zeros_added_1.png" width=40%>  
 
-- zeros_added_table_viz.png
+# ADDMISSINGITEMS() {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 7%;">
+```{}
+orders_zeros_added = 
+CALCULATETABLE(ADDCOLUMNS(
+ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], 
+  "amount", SUM(orders_big[dollar_amount])), 
+cal_table[cal_month], 'product'[product]),
+"amount filled", IF(ISBLANK([amount]), 0, [amount])))
+```
+</div>
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/orders_zeros_added_2.png" width=40%>  
 
-# Star Schema Again {.normal_slide}
-
-- Yeah, again
+# ADDMISSINGITEMS() {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/amount_filled_1.png" width=100%>  
+</div>  
 
 # High Density Sampling {.normal_slide}
-
+<div style="margin-top: 7%;">
+::: {.container}
+:::: {.col}
+<img src="images/high_density_sampling.png" width=35%>
+::::
+:::: {.col}
 - Might need to turn this off
+::::
+:::
+</div>
 
-# Filter Product Availability
+# ADDMISSINGITEMS() {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/average_amount_1.png" width=100%> 
+</div>  
 
-- table_image.png
+# Polishing {.section_slide .center}
 
-# Filter Product Availability
+# Polishing {.normal_slide}
+<div style="margin-top: 7%;">
+- Filter for product availability
+</div>
 
-- Import the data
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_dates_table.png" width=80%> 
+</div>
 
-- Make Connections
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_dates_connection.png" width=60%> 
+</div>
 
-# Filter Product Availability
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
 ```{}
-product_availability = FILTER(CROSSJOIN(cal_table, product), cal_month[month] >= product[start_month] && cal_month[month] <= product[end_month])
+product_availability = 
+FILTER(CROSSJOIN(cal_table, product), 
+  cal_month[month] >= product[start_month] && 
+    cal_month[month] <= product[end_month])
 ```
+</div>
+<div>
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_table.png" width=100%> 
+</div>  
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_connection.png" width=100%> 
+</div>  
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+```{}
+orders_zeros_added = CALCULATETABLE(ADDCOLUMNS(
+ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], 
+"amount", SUM(orders_big[dollar_amount])), 
+cal_table[cal_month], 'product'[product], product_availability),
+"amount filled", IF(ISBLANK([amount]), 0, [amount])))
+```
+</div>
+<div>
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_filter.png" width=100%> 
+</div>  
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_filter_graph.png" width=100%> 
+</div>  
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_filter_graph_fixed.png" width=100%> 
+</div>  
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/product_availability_filter_table.png" width=100%> 
+</div>  
+
+# Polishing {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 15%;">
+- Filter for product availability
+</div>
+<div class="fragment">
+- Add other measures
+</div>
+
+# Customers {.normal_slide}
+<div style="margin-top: 7%;">
+```{}
+orders_zeros_added = 
+CALCULATETABLE(ADDCOLUMNS(
+ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], 
+"amount", SUM(orders_big[dollar_amount]), 
+"customers", DISTINCTCOUNT(orders_big[customer_id])), 
+cal_table[cal_month], 'product'[product], product_availability),
+"amount filled", IF(ISBLANK([amount]), 0, [amount]), 
+"customers filled", IF(ISBLANK([customers]), 0, [customers])))
+```
+</div>
+<div>
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/add_customers.png" width=100%> 
+</div>  
+
+# Customers {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/customers_graph.png" width=100%>   
+</div>  
+
+# Customers {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/customers_table.png" width=100%>
+</div>  
+
+# Orders {.normal_slide}
+<div style="margin-top: 7%;">
+```{}
+orders_zeros_added = 
+CALCULATETABLE(ADDCOLUMNS(
+ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], 
+"amount", SUM(orders_big[dollar_amount]), 
+"customers", DISTINCTCOUNT(orders_big[customer_id]), 
+"orders", DISTINCTCOUNT(orders_big[order_number])), 
+cal_table[cal_month], 'product'[product], product_availability),
+"amount filled", IF(ISBLANK([amount]), 0, [amount]), 
+"customers filled", IF(ISBLANK([customers]), 0, [customers]), 
+"orders filled", IF(ISBLANK([orders]), 0, [orders])))
+```
+</div>
+<div>
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/add_orders.png" width=100%> 
+</div>  
+
+# Orders {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/orders_graph.png" width=100%>   
+</div>  
+
+# Orders {.normal_slide}
+<div style="margin-top: 7%;">
+<img style="display: block; margin-left: auto; margin-right:auto;" 
+  src="images/orders_table.png" width=100%>  
+</div>  
+
+# Polishing {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 15%;">
+- Filter for product availability
+</div>
+<div style="margin-bottom: 15%;">
+- Add other measures
+</div>
+<div class="fragment">
+- Filters
+</div>
+
+# Filters {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 15%;">
+- Just use the built in filters for the table
+</div>
+<div class="fragment">
+- Use Star Schema again (will need to create new tables)
+</div>
+
+# End {.title_slide .center}
