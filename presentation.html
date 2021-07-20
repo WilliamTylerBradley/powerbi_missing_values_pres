@@ -795,6 +795,9 @@ You can mix and match these strategies, but that can be annoying.
 <div>
 </li>
 </ul>
+<aside class="notes">
+Normally a ‘suggestion’ from Microsoft, but often a great idea.
+</aside>
 </section>
 <section id="star-schema-1" class="slide level1 normal_slide">
 <h1 class="normal_slide">Star Schema</h1>
@@ -876,7 +879,7 @@ cal_table[cal_month], &#39;product&#39;[product])</code></pre>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_zeros_added_1.PNG" width=40%></p>
 <aside class="notes">
-Basically a full join between calendar months and products.
+Basically a full join between calendar months and products. You can see ShowAll_ColumnName cal_month and product, the Table is the SUMMARIZECOLUMNS, the GroupBy_ColumnName is the same as the ShowAll_ColumnName, no filters for now.
 </aside>
 </section>
 <section id="addmissingitems-3" class="slide level1 normal_slide">
@@ -986,6 +989,9 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_filter.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Same has previous one, but with product_availability used as a filter.
+</aside>
 </section>
 <section id="filter-product-availability-5" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -1089,7 +1095,7 @@ Need to use cal_table_month for axis.
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <ul>
-<li>BLANK is NOT NULL</li>
+<li>BLANK is not like SQL NULL</li>
 </ul>
 </div>
 <div class="fragment" style="margin-bottom: 5%;">
@@ -1099,7 +1105,7 @@ Need to use cal_table_month for axis.
 </ul>
 </div>
 <div class="fragment" style="margin-bottom: 5%; text-align: center">
-<p>1 - (A/B) = (B/B) - (A/B) = (B/A)/B</p>
+<p>1 - (A/B) = (B/B) - (A/B) = (B - A)/B</p>
 </div>
 <div class="fragment" style="margin-bottom: 5%;">
 <ul>
