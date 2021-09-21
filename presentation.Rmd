@@ -135,8 +135,8 @@ You can also see that this can mess up any calculations. In this example, the mo
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
 - Dollar amount
-- Number of orders
 - Number of distinct customers
+- Number of orders
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
 - Filter by product and month
@@ -159,7 +159,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 </div>
 
 <aside class="notes">
-You can just add zero to the end of measures.
+Sometimes this works.
 </aside>
 
 # Basic Strategies {.normal_slide}
@@ -202,14 +202,18 @@ monthly_average = DIVIDE([sum_amount], 12)
 
 # Basic Strategies {.normal_slide}
 <div class="fragment" style="margin-top: 7%; margin-bottom: 15%;">
-- Clean the data
+- Clean up the data by:
 </div>
 <div class="fragment" style="margin-bottom: 15%;">
-- Import monthly data
+- Importing monthly data
 </div>
 <div class="fragment" >
-- Import zero
+- Importing zero
 </div>
+
+<aside class="notes">
+There are ways to do that in SQL and Power Query.
+</aside>
 
 # Basic Strategies {.normal_slide}
 <div class="fragment" style="margin-top: 10%; margin-bottom: 20%;">
@@ -231,19 +235,23 @@ You can mix and match these strategies, but that can be annoying.
   src="images/orders_big.PNG" width=100%>
 </div>  
 
+<aside class="notes">
+Still a year of data but a lot more products.
+</aside>
+
 # End Product {.normal_slide}
-<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
+<div style="margin-top: 7%; margin-bottom: 7%;">
 - Line graphs and tables by product over time
 </div>
-<div class="fragment" style="margin-bottom: 7%;">
+<div style="margin-bottom: 7%;">
 - Dollar amount
-- Number of orders
 - Number of distinct customers
+- Number of orders
 </div>
-<div class="fragment" style="margin-bottom: 7%;">
+<div style="margin-bottom: 7%;">
 - Filter by product and month
 </div>
-<div class="fragment">
+<div>
 - Fill in zeros for sales when product is available
 </div>
 
@@ -252,10 +260,23 @@ You can mix and match these strategies, but that can be annoying.
 - Calendar Table Setup
 </div>
 
+<aside class="notes">
+There will be three parts to this one. The first part is setting up a calendar table to use as a date dimension.
+</aside>
+
 # Calendar Table {.normal_slide}
-<div class="fragment" style="margin-top: 10%; margin-bottom: 20%;">
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
 - Table created in Power BI that contains all the dates you need and associated information, using the CALENDAR function.
 </div>
+
+<div class="fragment" style="margin-bottom: 7%;">
+- The CALENDAR function needs a start date and end date.
+</div>
+
+<div class="fragment" style="margin-bottom: 7%;">
+- Fills in the day in between (including start and end dates).
+</div>
+
 <div class="fragment">
 - Three examples
 </div>
@@ -283,6 +304,10 @@ cal_table = CALENDAR(
 ```
 </div>
 
+<aside class="notes">
+Specific dates, TODAY function, from the data. Then there is also CALENDARAUTO(), Auto date/times, and setting a date table.
+</aside>
+
 # Calendar Table {.normal_slide}
 <div style="margin-top: 7%;">
 ```{}
@@ -291,6 +316,10 @@ cal_month = STARTOFMONTH(cal_table[DATE])
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/cal_table.PNG">
 <div>  
+
+<aside class="notes">
+Add in month, change format (always want to match)
+</aside>
   
 # Calendar Table {.normal_slide}
 <div style="margin-top: 7%;">
@@ -334,6 +363,10 @@ customer = SUMMARIZECOLUMNS(orders_big[customer_id])
   src="images/star_schema.PNG" width=100%>  
 </div>  
 
+<aside class="notes">
+Can see the star shape. Easy to use with functions.
+</aside>
+
 # Better Strategy {.normal_slide}
 <div style="margin-top: 7%; margin-bottom: 15%;">
 - Calendar Table Setup +
@@ -358,13 +391,28 @@ customer = SUMMARIZECOLUMNS(orders_big[customer_id])
 - ShowAll_ColumnName - What you want to fill in
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
-- Table - Base table with missing data (orders table here)
+- Table - Base table with missing data (based on orders table here)
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
 - GroupBy_ColumnName - What you want to fill in (same as ShowAll_ColumnName unless ROLLUP)
 </div>
 <div class="fragment">
 - FilterTable - Filter out unneeded combinations
+</div>
+
+# ADDMISSINGITEMS() {.normal_slide}
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
+- ShowAll_ColumnName - 
+```{}
+cal_table[cal_month], 'product'[product]
+```
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+- Table - 
+```{}
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], 
+  "amount", SUM(orders_big[dollar_amount])
+```  
 </div>
 
 # ADDMISSINGITEMS() {.normal_slide}
@@ -399,6 +447,10 @@ cal_table[cal_month], 'product'[product]),
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_zeros_added_2.PNG" width=40%>  
 
+<aside class="notes">
+Add in amount filled (could replace amount).
+</aside>
+
 # ADDMISSINGITEMS() {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
@@ -425,6 +477,10 @@ cal_table[cal_month], 'product'[product]),
   src="images/average_amount_1.PNG" width=100%> 
 </div>  
 
+<aside class="notes">
+Compare summary stats
+</aside>
+
 # Polishing {.section_slide .center}
 
 # Polishing {.normal_slide}
@@ -438,6 +494,10 @@ cal_table[cal_month], 'product'[product]),
   src="images/product_dates_table.PNG" width=80%> 
 </div>
 
+<aside class="notes">
+Let's say different products were available for months.
+</aside>
+
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
@@ -445,7 +505,7 @@ cal_table[cal_month], 'product'[product]),
 </div>
 
 <aside class="notes">
-There are multiple rows per product for cases when there are jumps in the dates.
+There are multiple rows per product for cases when there are jumps in the dates. So you can't just join to orders_big.
 </aside>
 
 # Filter Product Availability {.normal_slide}
@@ -453,8 +513,8 @@ There are multiple rows per product for cases when there are jumps in the dates.
 ```{}
 product_availability = 
 FILTER(CROSSJOIN(cal_table, product), 
-  cal_month[month] >= product[start_month] && 
-    cal_month[month] <= product[end_month])
+  cal_month[month] >= product_dates[start_month] && 
+    cal_month[month] <= product_dates[end_month])
 ```
 </div>
 <div>
@@ -462,11 +522,38 @@ FILTER(CROSSJOIN(cal_table, product),
   src="images/product_availability_table.PNG" width=100%> 
 </div>  
 
+<aside class="notes">
+Build table with month filled down. (There are others ways to do this, especially when bringing the data into Power BI)
+</aside>
+
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_connection.PNG" width=100%> 
 </div>  
+
+# Filter Product Availability {.normal_slide}
+<div style="margin-top: 7%; margin-bottom: 7%;">
+- No filter
+```{}
+orders_zeros_added = 
+ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], 
+"amount", SUM(orders_big[dollar_amount])), 
+cal_table[cal_month], 'product'[product])
+```
+</div>
+<div>
+- Filter
+```{}
+orders_zeros_added = 
+ADDMISSINGITEMS(cal_table[cal_month], 'product'[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product], 
+"amount", SUM(orders_big[dollar_amount])), 
+cal_table[cal_month], 'product'[product], product_availability)
+```
+</div>  
+
 
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
@@ -494,6 +581,10 @@ Same has previous one, but with product_availability used as a filter.
   src="images/product_availability_filter_graph.PNG" width=100%> 
 </div>  
 
+<aside class="notes">
+Still not quite right. Notice the orange line across the middle.
+</aside>
+
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
@@ -517,6 +608,11 @@ X axis needs to be set to Categorical
 <div>
 - Let's backtrack a little bit...
 </div>  
+
+<aside class="notes">
+Go back before we filtered on availability.
+</aside>
+
 
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%; margin-bottom: 5%;">
@@ -543,6 +639,11 @@ CROSSJOIN(cal_table_month, product_dates),
     cal_table_month[month] <= product_dates[end_month])
 ```
 </div>
+
+<aside class="notes">
+Create a new star schema. Can't reuse the same tables.
+</aside>
+
 
 # Filter Product Availability {.normal_slide}
 <div style="margin-top: 7%;">
@@ -602,6 +703,10 @@ Need to use cal_table_month for axis.
 - Right side = BLANK
 </div>
 
+<aside class="notes">
+Need to watch this in calculations like the one we just did.
+</aside>
+
 # Polishing {.normal_slide}
 <div style="margin-top: 7%; margin-bottom: 15%;">
 - Filter for product availability
@@ -628,6 +733,10 @@ cal_table[cal_month], 'product'[product], product_availability),
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/add_customers.PNG" width=100%> 
 </div>  
+
+<aside class="notes">
+Just need to add DISTINCTCOUNT of customer_id and carry through.
+</aside>
 
 # Customers {.normal_slide}
 <div style="margin-top: 7%;">

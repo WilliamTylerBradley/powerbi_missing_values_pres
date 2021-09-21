@@ -443,7 +443,7 @@ style.innerHTML = style_script;
 document.getElementsByTagName('head')[0].appendChild(style);
 </script>
 
-    <script src="presentation_files/header-attrs-2.8/header-attrs.js"></script>
+    <script src="presentation_files/header-attrs-2.10/header-attrs.js"></script>
 </head>
 <body>
   <div class="reveal">
@@ -570,8 +570,8 @@ You can also see that this can mess up any calculations. In this example, the mo
 <div class="fragment" style="margin-bottom: 7%;">
 <ul>
 <li>Dollar amount</li>
-<li>Number of orders</li>
 <li>Number of distinct customers</li>
+<li>Number of orders</li>
 </ul>
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
@@ -603,7 +603,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 </ul>
 </div>
 <aside class="notes">
-You can just add zero to the end of measures.
+Sometimes this works.
 </aside>
 </section>
 <section id="basic-strategies-2" class="slide level1 normal_slide">
@@ -649,19 +649,22 @@ You can just fix the math if you know it’s a constant.
 <h1 class="normal_slide">Basic Strategies</h1>
 <div class="fragment" style="margin-top: 7%; margin-bottom: 15%;">
 <ul>
-<li>Clean the data</li>
+<li>Clean up the data by:</li>
 </ul>
 </div>
 <div class="fragment" style="margin-bottom: 15%;">
 <ul>
-<li>Import monthly data</li>
+<li>Importing monthly data</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li>Import zero</li>
+<li>Importing zero</li>
 </ul>
 </div>
+<aside class="notes">
+There are ways to do that in SQL and Power Query.
+</aside>
 </section>
 <section id="basic-strategies-5" class="slide level1 normal_slide">
 <h1 class="normal_slide">Basic Strategies</h1>
@@ -688,27 +691,30 @@ You can mix and match these strategies, but that can be annoying.
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_big.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Still a year of data but a lot more products.
+</aside>
 </section>
 <section id="end-product-1" class="slide level1 normal_slide">
 <h1 class="normal_slide">End Product</h1>
-<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
+<div style="margin-top: 7%; margin-bottom: 7%;">
 <ul>
 <li>Line graphs and tables by product over time</li>
 </ul>
 </div>
-<div class="fragment" style="margin-bottom: 7%;">
+<div style="margin-bottom: 7%;">
 <ul>
 <li>Dollar amount</li>
-<li>Number of orders</li>
 <li>Number of distinct customers</li>
+<li>Number of orders</li>
 </ul>
 </div>
-<div class="fragment" style="margin-bottom: 7%;">
+<div style="margin-bottom: 7%;">
 <ul>
 <li>Filter by product and month</li>
 </ul>
 </div>
-<div class="fragment">
+<div>
 <ul>
 <li>Fill in zeros for sales when product is available</li>
 </ul>
@@ -721,12 +727,25 @@ You can mix and match these strategies, but that can be annoying.
 <li>Calendar Table Setup</li>
 </ul>
 </div>
+<aside class="notes">
+There will be three parts to this one. The first part is setting up a calendar table to use as a date dimension.
+</aside>
 </section>
 <section id="calendar-table" class="slide level1 normal_slide">
 <h1 class="normal_slide">Calendar Table</h1>
-<div class="fragment" style="margin-top: 10%; margin-bottom: 20%;">
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
 <ul>
 <li>Table created in Power BI that contains all the dates you need and associated information, using the CALENDAR function.</li>
+</ul>
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+<ul>
+<li>The CALENDAR function needs a start date and end date.</li>
+</ul>
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+<ul>
+<li>Fills in the day in between (including start and end dates).</li>
 </ul>
 </div>
 <div class="fragment">
@@ -752,6 +771,9 @@ You can mix and match these strategies, but that can be annoying.
   MIN(orders_small[date]),
   MAX(orders_small[date]))</code></pre>
 </div>
+<aside class="notes">
+Specific dates, TODAY function, from the data. Then there is also CALENDARAUTO(), Auto date/times, and setting a date table.
+</aside>
 </section>
 <section id="calendar-table-2" class="slide level1 normal_slide">
 <h1 class="normal_slide">Calendar Table</h1>
@@ -761,6 +783,9 @@ You can mix and match these strategies, but that can be annoying.
   src="images/cal_table.PNG">
 <div>
 
+<aside class="notes">
+Add in month, change format (always want to match)
+</aside>
 </section>
 <section id="calendar-table-3" class="slide level1 normal_slide">
 <h1 class="normal_slide">Calendar Table</h1>
@@ -811,6 +836,9 @@ Normally a ‘suggestion’ from Microsoft, but often a great idea.
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/star_schema.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Can see the star shape. Easy to use with functions.
+</aside>
 </section>
 <section id="better-strategy-3" class="slide level1 normal_slide">
 <h1 class="normal_slide">Better Strategy</h1>
@@ -853,7 +881,7 @@ Normally a ‘suggestion’ from Microsoft, but often a great idea.
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
 <ul>
-<li>Table - Base table with missing data (orders table here)</li>
+<li>Table - Base table with missing data (based on orders table here)</li>
 </ul>
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
@@ -869,6 +897,22 @@ Normally a ‘suggestion’ from Microsoft, but often a great idea.
 </section>
 <section id="addmissingitems-2" class="slide level1 normal_slide">
 <h1 class="normal_slide">ADDMISSINGITEMS()</h1>
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
+<ul>
+<li>ShowAll_ColumnName -</li>
+</ul>
+<pre><code>cal_table[cal_month], &#39;product&#39;[product]</code></pre>
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+<ul>
+<li>Table -</li>
+</ul>
+<pre><code>SUMMARIZECOLUMNS(cal_table[cal_month], &#39;product&#39;[product], 
+  &quot;amount&quot;, SUM(orders_big[dollar_amount])</code></pre>
+</div>
+</section>
+<section id="addmissingitems-3" class="slide level1 normal_slide">
+<h1 class="normal_slide">ADDMISSINGITEMS()</h1>
 <div style="margin-top: 7%; margin-bottom: 7%;">
 <pre><code>orders_zeros_added = 
 ADDMISSINGITEMS(cal_table[cal_month], &#39;product&#39;[product], 
@@ -882,7 +926,7 @@ cal_table[cal_month], &#39;product&#39;[product])</code></pre>
 Basically a full join between calendar months and products. You can see ShowAll_ColumnName cal_month and product, the Table is the SUMMARIZECOLUMNS, the GroupBy_ColumnName is the same as the ShowAll_ColumnName, no filters for now.
 </aside>
 </section>
-<section id="addmissingitems-3" class="slide level1 normal_slide">
+<section id="addmissingitems-4" class="slide level1 normal_slide">
 <h1 class="normal_slide">ADDMISSINGITEMS()</h1>
 <div style="margin-top: 7%; margin-bottom: 7%;">
 <pre><code>orders_zeros_added = 
@@ -895,8 +939,11 @@ cal_table[cal_month], &#39;product&#39;[product]),
 </div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_zeros_added_2.PNG" width=40%></p>
+<aside class="notes">
+Add in amount filled (could replace amount).
+</aside>
 </section>
-<section id="addmissingitems-4" class="slide level1 normal_slide">
+<section id="addmissingitems-5" class="slide level1 normal_slide">
 <h1 class="normal_slide">ADDMISSINGITEMS()</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
@@ -920,12 +967,15 @@ cal_table[cal_month], &#39;product&#39;[product]),
 </div>
 </div>
 </section>
-<section id="addmissingitems-5" class="slide level1 normal_slide">
+<section id="addmissingitems-6" class="slide level1 normal_slide">
 <h1 class="normal_slide">ADDMISSINGITEMS()</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/average_amount_1.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Compare summary stats
+</aside>
 </section>
 <section id="polishing" class="slide level1 section_slide center">
 <h1 class="section_slide center">Polishing</h1>
@@ -944,6 +994,9 @@ cal_table[cal_month], &#39;product&#39;[product]),
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_dates_table.PNG" width=80%></p>
 </div>
+<aside class="notes">
+Let’s say different products were available for months.
+</aside>
 </section>
 <section id="filter-product-availability-1" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -952,7 +1005,7 @@ cal_table[cal_month], &#39;product&#39;[product]),
   src="images/product_dates_connection.PNG" width=60%></p>
 </div>
 <aside class="notes">
-There are multiple rows per product for cases when there are jumps in the dates.
+There are multiple rows per product for cases when there are jumps in the dates. So you can’t just join to orders_big.
 </aside>
 </section>
 <section id="filter-product-availability-2" class="slide level1 normal_slide">
@@ -960,13 +1013,16 @@ There are multiple rows per product for cases when there are jumps in the dates.
 <div style="margin-top: 7%;">
 <pre><code>product_availability = 
 FILTER(CROSSJOIN(cal_table, product), 
-  cal_month[month] &gt;= product[start_month] &amp;&amp; 
-    cal_month[month] &lt;= product[end_month])</code></pre>
+  cal_month[month] &gt;= product_dates[start_month] &amp;&amp; 
+    cal_month[month] &lt;= product_dates[end_month])</code></pre>
 </div>
 <div>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_table.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Build table with month filled down. (There are others ways to do this, especially when bringing the data into Power BI)
+</aside>
 </section>
 <section id="filter-product-availability-3" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -976,6 +1032,29 @@ FILTER(CROSSJOIN(cal_table, product),
 </div>
 </section>
 <section id="filter-product-availability-4" class="slide level1 normal_slide">
+<h1 class="normal_slide">Filter Product Availability</h1>
+<div style="margin-top: 7%; margin-bottom: 7%;">
+<ul>
+<li>No filter</li>
+</ul>
+<pre><code>orders_zeros_added = 
+ADDMISSINGITEMS(cal_table[cal_month], &#39;product&#39;[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], &#39;product&#39;[product], 
+&quot;amount&quot;, SUM(orders_big[dollar_amount])), 
+cal_table[cal_month], &#39;product&#39;[product])</code></pre>
+</div>
+<div>
+<ul>
+<li>Filter</li>
+</ul>
+<pre><code>orders_zeros_added = 
+ADDMISSINGITEMS(cal_table[cal_month], &#39;product&#39;[product], 
+SUMMARIZECOLUMNS(cal_table[cal_month], &#39;product&#39;[product], 
+&quot;amount&quot;, SUM(orders_big[dollar_amount])), 
+cal_table[cal_month], &#39;product&#39;[product], product_availability)</code></pre>
+</div>
+</section>
+<section id="filter-product-availability-5" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <pre><code>orders_zeros_added = CALCULATETABLE(ADDCOLUMNS(
@@ -993,14 +1072,17 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 Same has previous one, but with product_availability used as a filter.
 </aside>
 </section>
-<section id="filter-product-availability-5" class="slide level1 normal_slide">
+<section id="filter-product-availability-6" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_filter_graph.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Still not quite right. Notice the orange line across the middle.
+</aside>
 </section>
-<section id="filter-product-availability-6" class="slide level1 normal_slide">
+<section id="filter-product-availability-7" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
@@ -1010,14 +1092,14 @@ Same has previous one, but with product_availability used as a filter.
 X axis needs to be set to Categorical
 </aside>
 </section>
-<section id="filter-product-availability-7" class="slide level1 normal_slide">
+<section id="filter-product-availability-8" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_filter_table.PNG" width=100%></p>
 </div>
 </section>
-<section id="filter-product-availability-8" class="slide level1 normal_slide">
+<section id="filter-product-availability-9" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 10%; margin-bottom: 20%;">
 <ul>
@@ -1029,8 +1111,11 @@ X axis needs to be set to Categorical
 <li>Let’s backtrack a little bit…</li>
 </ul>
 </div>
+<aside class="notes">
+Go back before we filtered on availability.
+</aside>
 </section>
-<section id="filter-product-availability-9" class="slide level1 normal_slide">
+<section id="filter-product-availability-10" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%; margin-bottom: 5%;">
 <pre><code>product_zeros = SUMMARIZECOLUMNS(orders_big[product])</code></pre>
@@ -1050,15 +1135,18 @@ CROSSJOIN(cal_table_month, product_dates),
   cal_table_month[month] &gt;= product_dates[start_month] &amp;&amp; 
     cal_table_month[month] &lt;= product_dates[end_month])</code></pre>
 </div>
+<aside class="notes">
+Create a new star schema. Can’t reuse the same tables.
+</aside>
 </section>
-<section id="filter-product-availability-10" class="slide level1 normal_slide">
+<section id="filter-product-availability-11" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_connection_2.PNG" width=100%></p>
 </div>
 </section>
-<section id="filter-product-availability-11" class="slide level1 normal_slide">
+<section id="filter-product-availability-12" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%; margin-bottom: 5%;">
 <pre><code>available = LOOKUPVALUE(product_availability[product], 
@@ -1074,7 +1162,7 @@ product_availability[product], orders_zeros_added[product])</code></pre>
   src="images/product_availability_filter_2.PNG" width=50%></p>
 </div>
 </section>
-<section id="filter-product-availability-12" class="slide level1 normal_slide">
+<section id="filter-product-availability-13" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
@@ -1084,14 +1172,14 @@ product_availability[product], orders_zeros_added[product])</code></pre>
 Need to use cal_table_month for axis.
 </aside>
 </section>
-<section id="filter-product-availability-13" class="slide level1 normal_slide">
+<section id="filter-product-availability-14" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_filter_table_2.PNG" width=100%></p>
 </div>
 </section>
-<section id="filter-product-availability-14" class="slide level1 normal_slide">
+<section id="filter-product-availability-15" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
 <div style="margin-top: 7%;">
 <ul>
@@ -1114,6 +1202,9 @@ Need to use cal_table_month for axis.
 <li>Right side = BLANK</li>
 </ul>
 </div>
+<aside class="notes">
+Need to watch this in calculations like the one we just did.
+</aside>
 </section>
 <section id="polishing-2" class="slide level1 normal_slide">
 <h1 class="normal_slide">Polishing</h1>
@@ -1145,6 +1236,9 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/add_customers.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Just need to add DISTINCTCOUNT of customer_id and carry through.
+</aside>
 </section>
 <section id="customers-1" class="slide level1 normal_slide">
 <h1 class="normal_slide">Customers</h1>
