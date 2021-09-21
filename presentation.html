@@ -768,8 +768,8 @@ There will be three parts to this one. The first part is setting up a calendar t
 </div>
 <div class="fragment">
 <pre><code>cal_table = CALENDAR(
-  MIN(orders_small[date]),
-  MAX(orders_small[date]))</code></pre>
+  MIN(orders_big[date]),
+  MAX(orders_big[date]))</code></pre>
 </div>
 <aside class="notes">
 Specific dates, TODAY function, from the data. Then there is also CALENDARAUTO(), Auto date/times, and setting a date table.
@@ -811,7 +811,7 @@ Add in month, change format (always want to match)
 <h1 class="normal_slide">Star Schema</h1>
 <div style="margin-top: 10%; margin-bottom: 20%;">
 <ul>
-<li>Main orders table in the middle</li>
+<li>Main orders_big table in the middle</li>
 </ul>
 </div>
 <div>
@@ -881,7 +881,7 @@ Can see the star shape. Easy to use with functions.
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
 <ul>
-<li>Table - Base table with missing data (based on orders table here)</li>
+<li>Table - SUMMARIZECOLUMNS table with missing data (based on orders_big table here)</li>
 </ul>
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
@@ -1043,7 +1043,7 @@ SUMMARIZECOLUMNS(cal_table[cal_month], &#39;product&#39;[product],
 &quot;amount&quot;, SUM(orders_big[dollar_amount])), 
 cal_table[cal_month], &#39;product&#39;[product])</code></pre>
 </div>
-<div>
+<div class="fragment">
 <ul>
 <li>Filter</li>
 </ul>
@@ -1215,12 +1215,12 @@ Need to watch this in calculations like the one we just did.
 </div>
 <div class="fragment">
 <ul>
-<li>Add other measures</li>
+<li>Add Customers and Orders measures</li>
 </ul>
 </div>
 </section>
-<section id="customers" class="slide level1 normal_slide">
-<h1 class="normal_slide">Customers</h1>
+<section id="customers-and-orders-measures" class="slide level1 normal_slide">
+<h1 class="normal_slide">Customers and Orders Measures</h1>
 <div style="margin-top: 7%;">
 <pre><code>orders_zeros_added = 
 CALCULATETABLE(ADDCOLUMNS(
@@ -1240,22 +1240,22 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 Just need to add DISTINCTCOUNT of customer_id and carry through.
 </aside>
 </section>
-<section id="customers-1" class="slide level1 normal_slide">
-<h1 class="normal_slide">Customers</h1>
+<section id="customers-and-orders-measures-1" class="slide level1 normal_slide">
+<h1 class="normal_slide">Customers and Orders Measures</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/customers_graph.PNG" width=100%></p>
 </div>
 </section>
-<section id="customers-2" class="slide level1 normal_slide">
-<h1 class="normal_slide">Customers</h1>
+<section id="customers-and-orders-measures-2" class="slide level1 normal_slide">
+<h1 class="normal_slide">Customers and Orders Measures</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/customers_table.PNG" width=100%></p>
 </div>
 </section>
-<section id="orders" class="slide level1 normal_slide">
-<h1 class="normal_slide">Orders</h1>
+<section id="customers-and-orders-measures-3" class="slide level1 normal_slide">
+<h1 class="normal_slide">Customers and Orders Measures</h1>
 <div style="margin-top: 7%;">
 <pre><code>orders_zeros_added = 
 CALCULATETABLE(ADDCOLUMNS(
@@ -1274,18 +1274,37 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
   src="images/add_orders.PNG" width=100%></p>
 </div>
 </section>
-<section id="orders-1" class="slide level1 normal_slide">
-<h1 class="normal_slide">Orders</h1>
+<section id="customers-and-orders-measures-4" class="slide level1 normal_slide">
+<h1 class="normal_slide">Customers and Orders Measures</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_graph.PNG" width=100%></p>
 </div>
 </section>
-<section id="orders-2" class="slide level1 normal_slide">
-<h1 class="normal_slide">Orders</h1>
+<section id="customers-and-orders-measures-5" class="slide level1 normal_slide">
+<h1 class="normal_slide">Customers and Orders Measures</h1>
 <div style="margin-top: 7%;">
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_table.PNG" width=100%></p>
+</div>
+</section>
+<section id="customers-and-orders-measures-6" class="slide level1 normal_slide">
+<h1 class="normal_slide">Customers and Orders Measures</h1>
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
+<ul>
+<li>Might need to watch DISTINCTCOUNT if needed in other aggregations.</li>
+</ul>
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+<ul>
+<li>Bring all customers through in the SUMMARIZECOLUMNS, but not in the ShowAll_ColumnName options.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>This will fill in missing product-month pairs but not in combination with customers/order.</li>
+<li>Get rows with no customer_id or order_id.</li>
+</ul>
 </div>
 </section>
 <section id="polishing-3" class="slide level1 normal_slide">
@@ -1297,7 +1316,7 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 </div>
 <div style="margin-bottom: 15%;">
 <ul>
-<li>Add other measures</li>
+<li>Add Customers and Orders measures</li>
 </ul>
 </div>
 <div class="fragment">

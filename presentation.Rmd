@@ -142,7 +142,7 @@ You can also see that this can mess up any calculations. In this example, the mo
 - Filter by product and month
 </div>
 <div class="fragment">
-- Fill in zeros for sales when product is available
+- Fill in zeros when product is available
 </div>
 
 # Basic Strategies {.section_slide .center}
@@ -252,7 +252,7 @@ Still a year of data but a lot more products.
 - Filter by product and month
 </div>
 <div>
-- Fill in zeros for sales when product is available
+- Fill in zeros when product is available
 </div>
 
 # Better Strategy {.normal_slide}
@@ -299,8 +299,8 @@ cal_table = CALENDAR(
 <div class="fragment">
 ```{}
 cal_table = CALENDAR(
-  MIN(orders_small[date]),
-  MAX(orders_small[date]))
+  MIN(orders_big[date]),
+  MAX(orders_big[date]))
 ```
 </div>
 
@@ -337,7 +337,7 @@ Add in month, change format (always want to match)
 
 # Star Schema {.normal_slide}
 <div style="margin-top: 10%; margin-bottom: 20%;">
-- Main orders table in the middle
+- Main orders_big table in the middle
 </div>
 <div>
 - Important dimensions on the outside
@@ -391,7 +391,7 @@ Can see the star shape. Easy to use with functions.
 - ShowAll_ColumnName - What you want to fill in
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
-- Table - Base table with missing data (based on orders table here)
+- Table - SUMMARIZECOLUMNS table with missing data (based on orders_big table here)
 </div>
 <div class="fragment" style="margin-bottom: 7%;">
 - GroupBy_ColumnName - What you want to fill in (same as ShowAll_ColumnName unless ROLLUP)
@@ -543,7 +543,7 @@ SUMMARIZECOLUMNS(cal_table[cal_month], 'product'[product],
 cal_table[cal_month], 'product'[product])
 ```
 </div>
-<div>
+<div class="fragment">
 - Filter
 ```{}
 orders_zeros_added = 
@@ -712,10 +712,10 @@ Need to watch this in calculations like the one we just did.
 - Filter for product availability
 </div>
 <div class="fragment">
-- Add other measures
+- Add Customers and Orders measures
 </div>
 
-# Customers {.normal_slide}
+# Customers and Orders Measures {.normal_slide}
 <div style="margin-top: 7%;">
 ```{}
 orders_zeros_added = 
@@ -738,19 +738,19 @@ cal_table[cal_month], 'product'[product], product_availability),
 Just need to add DISTINCTCOUNT of customer_id and carry through.
 </aside>
 
-# Customers {.normal_slide}
+# Customers and Orders Measures {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/customers_graph.PNG" width=100%>   
 </div>  
 
-# Customers {.normal_slide}
+# Customers and Orders Measures {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/customers_table.PNG" width=100%>
 </div>  
 
-# Orders {.normal_slide}
+# Customers and Orders Measures {.normal_slide}
 <div style="margin-top: 7%;">
 ```{}
 orders_zeros_added = 
@@ -771,24 +771,36 @@ cal_table[cal_month], 'product'[product], product_availability),
   src="images/add_orders.PNG" width=100%> 
 </div>  
 
-# Orders {.normal_slide}
+# Customers and Orders Measures {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_graph.PNG" width=100%>   
 </div>  
 
-# Orders {.normal_slide}
+# Customers and Orders Measures {.normal_slide}
 <div style="margin-top: 7%;">
 <img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_table.PNG" width=100%>  
 </div>  
+
+# Customers and Orders Measures {.normal_slide}
+<div class="fragment" style="margin-top: 7%; margin-bottom: 7%;">
+- Might need to watch DISTINCTCOUNT if needed in other aggregations.
+</div>
+<div class="fragment" style="margin-bottom: 7%;">
+- Bring all customers through in the SUMMARIZECOLUMNS, but not in the ShowAll_ColumnName options.
+</div>
+<div class="fragment">
+- This will fill in missing product-month pairs but not in combination with customers/order.
+- Get rows with no customer_id or order_id.
+</div>
 
 # Polishing {.normal_slide}
 <div style="margin-top: 7%; margin-bottom: 15%;">
 - Filter for product availability
 </div>
 <div style="margin-bottom: 15%;">
-- Add other measures
+- Add Customers and Orders measures
 </div>
 <div class="fragment">
 - Filters
