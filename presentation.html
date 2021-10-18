@@ -1022,6 +1022,9 @@ Now we can compare the summary stats. We can see all the months are filled in so
 </section>
 <section id="polishing" class="slide level1 section_slide center">
 <h1 class="section_slide center">Polishing</h1>
+<aside class="notes">
+Now that we have the main setup, we can move to the last main section on polishing up the dashboard.
+</aside>
 </section>
 <section id="polishing-1" class="slide level1 normal_slide">
 <h1 class="normal_slide">Polishing</h1>
@@ -1030,6 +1033,9 @@ Now we can compare the summary stats. We can see all the months are filled in so
 <li>Filter for product availability</li>
 </ul>
 </div>
+<aside class="notes">
+The first part is filtering the data to exclude months where the product wasn’t available for sale. We should end up with filled in months only when the product was an option.
+</aside>
 </section>
 <section id="filter-product-availability" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -1038,7 +1044,7 @@ Now we can compare the summary stats. We can see all the months are filled in so
   src="images/product_dates_table.PNG" width=80%></p>
 </div>
 <aside class="notes">
-Let’s say different products were available for months.
+Let’s say different products were available for months. We’ll have this in a table called product_dates. This could be saved in a database then pulled into Power BI.
 </aside>
 </section>
 <section id="filter-product-availability-1" class="slide level1 normal_slide">
@@ -1048,7 +1054,7 @@ Let’s say different products were available for months.
   src="images/product_dates_connection.PNG" width=60%></p>
 </div>
 <aside class="notes">
-There are multiple rows per product for cases when there are jumps in the dates. So you can’t just join to orders_big.
+We can join this to our products table. In the product_dates table, there are multiple rows per product for cases when there are jumps in the dates. Like product that are available during the summer could have a row for January to March 2020 and a row for November to December 2020. So you can’t just join to orders_big table.
 </aside>
 </section>
 <section id="filter-product-availability-2" class="slide level1 normal_slide">
@@ -1064,7 +1070,7 @@ FILTER(CROSSJOIN(cal_table, product),
   src="images/product_availability_table.PNG" width=100%></p>
 </div>
 <aside class="notes">
-Build table with month filled down. (There are others ways to do this, especially when bringing the data into Power BI)
+We’re going to build table with month filled down by using CROSSJOIN on our date table and product_dates. Then filter down to the combinations we want. (There are others ways to do this, especially when bringing the data into Power BI)
 </aside>
 </section>
 <section id="filter-product-availability-3" class="slide level1 normal_slide">
@@ -1073,6 +1079,9 @@ Build table with month filled down. (There are others ways to do this, especiall
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_connection.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Then we just to our other tables.
+</aside>
 </section>
 <section id="filter-product-availability-4" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -1096,6 +1105,9 @@ SUMMARIZECOLUMNS(cal_table[cal_month], &#39;product&#39;[product],
 &quot;amount&quot;, SUM(orders_big[dollar_amount])), 
 cal_table[cal_month], &#39;product&#39;[product], product_availability)</code></pre>
 </div>
+<aside class="notes">
+To use this table as a filter, we just need to add it to the end of our ADDMISSINGITEMS call. This will filter out combinations that weren’t in our product_availability table.
+</aside>
 </section>
 <section id="filter-product-availability-5" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -1112,7 +1124,7 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
   src="images/product_availability_filter.PNG" width=100%></p>
 </div>
 <aside class="notes">
-Same has previous one, but with product_availability used as a filter.
+Same has previous orders_zeros_added table, but with product_availability used as a filter.
 </aside>
 </section>
 <section id="filter-product-availability-6" class="slide level1 normal_slide">
@@ -1122,7 +1134,7 @@ Same has previous one, but with product_availability used as a filter.
   src="images/product_availability_filter_graph.PNG" width=100%></p>
 </div>
 <aside class="notes">
-Still not quite right. Notice the orange line across the middle.
+Now we can see gaps in the data where there are months without product availability. However, it’s still not quite right. Notice the orange line across the middle.
 </aside>
 </section>
 <section id="filter-product-availability-7" class="slide level1 normal_slide">
@@ -1132,7 +1144,7 @@ Still not quite right. Notice the orange line across the middle.
   src="images/product_availability_filter_graph_fixed.PNG" width=100%></p>
 </div>
 <aside class="notes">
-X axis needs to be set to Categorical
+To fix the issue of joining over missing dates, the X axis needs to be set to Categorical. And now, everything is good,
 </aside>
 </section>
 <section id="filter-product-availability-8" class="slide level1 normal_slide">
@@ -1141,6 +1153,9 @@ X axis needs to be set to Categorical
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_filter_table.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Checking the summary tables shows everything is working here too.
+</aside>
 </section>
 <section id="filter-product-availability-9" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -1155,7 +1170,7 @@ X axis needs to be set to Categorical
 </ul>
 </div>
 <aside class="notes">
-Go back before we filtered on availability.
+Let’s say you either don’t want the X axis to be categorical or you want all the months with missing for no product availability. We’ll go back before we filtered on availability and reset a little bit.
 </aside>
 </section>
 <section id="filter-product-availability-10" class="slide level1 normal_slide">
@@ -1179,7 +1194,7 @@ CROSSJOIN(cal_table_month, product_dates),
     cal_table_month[month] &lt;= product_dates[end_month])</code></pre>
 </div>
 <aside class="notes">
-Create a new star schema. Can’t reuse the same tables.
+We’ll create a new star schema around our orders_big table. We can’t reuse the same tables or we’ll get a circular dependency error. So, we’ll add in a product and date dimensions and the table to check product availability. We can reduce our date table to just months since we already summarized the data.
 </aside>
 </section>
 <section id="filter-product-availability-11" class="slide level1 normal_slide">
@@ -1188,6 +1203,9 @@ Create a new star schema. Can’t reuse the same tables.
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_connection_2.PNG" width=100%></p>
 </div>
+<aside class="notes">
+On this slide, we can see the two star schemas.
+</aside>
 </section>
 <section id="filter-product-availability-12" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -1204,6 +1222,9 @@ product_availability[product], orders_zeros_added[product])</code></pre>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_filter_2.PNG" width=50%></p>
 </div>
+<aside class="notes">
+To incorporate the product availability check, we’ll create a measure using LOOKUPVALUE to see if the month-product combination existed. Then another measure to fill in zeros or keep the missing value.
+</aside>
 </section>
 <section id="filter-product-availability-13" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -1212,7 +1233,7 @@ product_availability[product], orders_zeros_added[product])</code></pre>
   src="images/product_availability_filter_graph_fixed_2.PNG" width=100%></p>
 </div>
 <aside class="notes">
-Need to use cal_table_month for axis.
+We have our continuous axis graph. Note that you need to use cal_table_month for axis.
 </aside>
 </section>
 <section id="filter-product-availability-14" class="slide level1 normal_slide">
@@ -1221,6 +1242,9 @@ Need to use cal_table_month for axis.
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/product_availability_filter_table_2.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Our summary tables are still good.
+</aside>
 </section>
 <section id="filter-product-availability-15" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filter Product Availability</h1>
@@ -1246,7 +1270,7 @@ Need to use cal_table_month for axis.
 </ul>
 </div>
 <aside class="notes">
-Need to watch this in calculations like the one we just did.
+One big catch for mixing missing and zeros in Power BI is that BLANK is not like SQL NULL. BLANK will convert to 0 in summations and substractions but will stay BLANK in division and multiplication. For example if you had this equation and B is BLANK, the left side will equal 1 because A divided by B is BLANK then 1 minus BLANK is 1. However the right side is BLANK because B minus A is negative A then negative A divided by B is BLANK. Even though these should match. So, depending on how you set up your measures, you can get different results. You’ll need to watch this in calculations.
 </aside>
 </section>
 <section id="polishing-2" class="slide level1 normal_slide">
@@ -1261,6 +1285,9 @@ Need to watch this in calculations like the one we just did.
 <li>Add Customers and Orders measures</li>
 </ul>
 </div>
+<aside class="notes">
+In addition to amount, we wanted measures for customers and orders.
+</aside>
 </section>
 <section id="customers-and-orders-measures" class="slide level1 normal_slide">
 <h1 class="normal_slide">Customers and Orders Measures</h1>
@@ -1280,7 +1307,7 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
   src="images/add_customers.PNG" width=100%></p>
 </div>
 <aside class="notes">
-Just need to add DISTINCTCOUNT of customer_id and carry through.
+All we need to add is DISTINCTCOUNT of customer_id and carry through, exactly like using amount.
 </aside>
 </section>
 <section id="customers-and-orders-measures-1" class="slide level1 normal_slide">
@@ -1289,6 +1316,9 @@ Just need to add DISTINCTCOUNT of customer_id and carry through.
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/customers_graph.PNG" width=100%></p>
 </div>
+<aside class="notes">
+We can see the appropriate graph.
+</aside>
 </section>
 <section id="customers-and-orders-measures-2" class="slide level1 normal_slide">
 <h1 class="normal_slide">Customers and Orders Measures</h1>
@@ -1296,6 +1326,9 @@ Just need to add DISTINCTCOUNT of customer_id and carry through.
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/customers_table.PNG" width=100%></p>
 </div>
+<aside class="notes">
+And the appropriate tables.
+</aside>
 </section>
 <section id="customers-and-orders-measures-3" class="slide level1 normal_slide">
 <h1 class="normal_slide">Customers and Orders Measures</h1>
@@ -1316,6 +1349,9 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/add_orders.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Adding in the number of orders is also exactly the same.
+</aside>
 </section>
 <section id="customers-and-orders-measures-4" class="slide level1 normal_slide">
 <h1 class="normal_slide">Customers and Orders Measures</h1>
@@ -1323,6 +1359,9 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_graph.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Similar graphs.
+</aside>
 </section>
 <section id="customers-and-orders-measures-5" class="slide level1 normal_slide">
 <h1 class="normal_slide">Customers and Orders Measures</h1>
@@ -1330,6 +1369,9 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_table.PNG" width=100%></p>
 </div>
+<aside class="notes">
+Similar tables.
+</aside>
 </section>
 <section id="customers-and-orders-measures-6" class="slide level1 normal_slide">
 <h1 class="normal_slide">Customers and Orders Measures</h1>
@@ -1349,6 +1391,9 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 <li>Get rows with no customer_id or order_id.</li>
 </ul>
 </div>
+<aside class="notes">
+In some cases, you’ll need to use DISTINCTCOUNT after filling in missing months. Like if you need more advance filtering or calculations. For example, distinct customers over a year will only equal to the sum of distinct customers every month if there are no repeated customers. To solve this problem, you can bring customer_id in the SUMMARIZECOLUMNS in ADDMISSINGITEMS but not place it in the ShowAll_ColumnName parameter. This will bring the individual customer_id’s through but not fill in missing months for them. You’ll end up with month-product rows with missing for customer_id and order_id.
+</aside>
 </section>
 <section id="polishing-3" class="slide level1 normal_slide">
 <h1 class="normal_slide">Polishing</h1>
@@ -1367,6 +1412,9 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 <li>Filters</li>
 </ul>
 </div>
+<aside class="notes">
+Finally, the last step is to add filters for product and month.
+</aside>
 </section>
 <section id="filters" class="slide level1 normal_slide">
 <h1 class="normal_slide">Filters</h1>
@@ -1385,9 +1433,15 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
 <li>That’s pretty much it.</li>
 </ul>
 </div>
+<aside class="notes">
+You can use built in filters for the table either in the filter panel or slicers. You can also built out a star schema again if you want. That’s pretty much it. All the normal Power BI features work from here.
+</aside>
 </section>
 <section id="end" class="slide level1 title_slide center">
 <h1 class="title_slide center">End</h1>
+<aside class="notes">
+And that’s the presentation. Thanks!
+</aside>
 </section>
     </div>
   </div>
