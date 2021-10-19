@@ -454,7 +454,7 @@ document.getElementsByTagName('head')[0].appendChild(style);
 <h1 class="title_slide center">Power BI and Missing Values</h1>
 <p>Tyler Bradley</p>
 <aside class="notes">
-Hey, I’m Tyler Bradley. I currently work for a health care organization in Asheville. This presentation comes from a project I worked on that involved solving these issues with missing values in Power BI. For this presentation, I’m assuming you have some familiarity with Power BI. So, I won’t walk through all the basics like pulling in data, but basically start after the beginning steps.
+This presentation comes from a project I worked on involving these issues with missing values in Power BI. For this presentation, I’m assuming you have some familiarity with Power BI. So, I won’t walk through all the basics like pulling in data but start after the beginning steps.
 </aside>
 </section>
 <section id="setup" class="slide level1 normal_slide">
@@ -480,7 +480,7 @@ Hey, I’m Tyler Bradley. I currently work for a health care organization in Ash
 </ul>
 </div>
 <aside class="notes">
-For today’s setup we’ll cover a background example that explains the issues, go through some basic strategies that might solve your problem, a better strategy that’s more work but a lot more robust, and then some additions options for polishing the dashboard.
+For today’s setup, we’ll cover a background example that explains the issues, go through some basic strategies that might solve your problem, a better strategy that’s more work but a lot more robust, and then some additional options for polishing the dashboard.
 </aside>
 </section>
 <section id="background-example" class="slide level1 normal_slide">
@@ -493,7 +493,7 @@ For today’s setup we’ll cover a background example that explains the issues,
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/background_base_data.PNG" width=75%></p>
 <aside class="notes">
-We’ll start with an orders table. Each row is an order that contains the order number, the product that was sold, a customer id, the date, and the dollar amount. The goal here is to get information on sales over time for each product. So we basically need to sum dollar amount by date.
+We’ll start with an orders table called orders_small. Each row is an order that contains the order number, the product that was sold, a customer id, the date, and the dollar amount. The goal here is to get information on sales over time for each product. So we basically need to sum the dollar amount by date.
 </aside>
 </section>
 <section id="background-example-1" class="slide level1 normal_slide">
@@ -504,7 +504,7 @@ We’ll start with an orders table. Each row is an order that contains the order
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/background_month.PNG" width=75%></p>
 <aside class="notes">
-Showing the data by day will be too granular, so we want to get it into months. We can add in some DAX code to create a new column for the month of each order. We’ll also just use date as a date hierarchy and compare the methods.
+Showing the data by day will be too granular, so we want to get it into months. We can add in some DAX code to create a new column for the month of each order. We’ll also just use the date as a date hierarchy and compare the methods.
 </aside>
 </section>
 <section id="background-example-2" class="slide level1 normal_slide">
@@ -514,7 +514,7 @@ Showing the data by day will be too granular, so we want to get it into months. 
   src="images/background_lines.PNG" width=100%></p>
 </div>
 <aside class="notes">
-This graph uses the month column we just created. You can see there are some missing values at the start and end of the dark blue line. The orange line is suspiciously straight.
+This graph uses the month column we just created. You can see there are some missing values at the start and end of the dark blue line. However, the orange line is suspiciously straight.
 </aside>
 </section>
 <section id="background-example-3" class="slide level1 normal_slide">
@@ -524,7 +524,7 @@ This graph uses the month column we just created. You can see there are some mis
   src="images/background_missing.PNG" width=100%></p>
 </div>
 <aside class="notes">
-This graph uses the date column from the data at the month level. You still see the missing values for the dark blue line, but now the orange line has missing values. The other graph was just connecting the segments across January to November.
+This graph uses the date column from the data at the month level. You still see the missing values for the dark blue line, but now the orange line has missing values. This is because the other graph was just connecting the segments across January to November.
 </aside>
 </section>
 <section id="background-example-4" class="slide level1 normal_slide">
@@ -534,7 +534,7 @@ This graph uses the date column from the data at the month level. You still see 
   src="images/background_missing_2.PNG" width=100%></p>
 </div>
 <aside class="notes">
-At a close look at the graph you see that there are three products that sale at different time of the year. Product A sells year round. Product B is only in the summer while product C is only in the winter.
+Looking closely at the graph, we see that these three products sell at different times of the year. Product A sells year-round. Product B is only in the summer, while product C is only in the winter.
 </aside>
 </section>
 <section id="background-example-5" class="slide level1 normal_slide">
@@ -544,7 +544,7 @@ At a close look at the graph you see that there are three products that sale at 
   src="images/background_missing_2_fixed.PNG" width=100%></p>
 </div>
 <aside class="notes">
-What we really want to see are all the lines filled in down to zero. The poorly drawn in lines display what we want to get at the end.
+What we really want to see are all the lines filled in down to zero. The poorly drawn lines display what we want to get at the end.
 </aside>
 </section>
 <section id="background-example-6" class="slide level1 normal_slide">
@@ -557,7 +557,7 @@ What we really want to see are all the lines filled in down to zero. The poorly 
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/background_table.PNG" width=100%></p>
 <aside class="notes">
-We can also see that this can mess up any calculations. In this example, the monthly_average is wrong because distinct_months is incorrect for selling over a full year.
+We can also see that this can mess up any calculations. In this example, the monthly_average is wrong because distinct_months is incorrect for selling over an entire year.
 </aside>
 </section>
 <section id="end-product" class="slide level1 normal_slide">
@@ -591,7 +591,7 @@ For this presentation, we’ll focus on creating an end product that has the fol
 <section id="basic-strategies" class="slide level1 section_slide center">
 <h1 class="section_slide center">Basic Strategies</h1>
 <aside class="notes">
-The next section will cover some basic strategies to fill in zeros for missing values. These techniques will handle a lot of problems and are pretty easy to implement.
+The following section will cover some basic strategies to fill in zeros for missing values. These techniques will handle a lot of problems and are pretty easy to implement.
 </aside>
 </section>
 <section id="basic-strategies-1" class="slide level1 normal_slide">
@@ -609,7 +609,7 @@ The next section will cover some basic strategies to fill in zeros for missing v
 </ul>
 </div>
 <aside class="notes">
-If you click on the down arrow on your axis, there will be an option for ‘Show items with no data’. This is always the first option I try. It only works in some situations and doesn’t work in this example.
+If you click on the down arrow on your axis, there will be an option for ‘Show items with no data’. This is always the first option I try. Unfortunately, it only works in some situations and doesn’t work in this example.
 </aside>
 </section>
 <section id="basic-strategies-2" class="slide level1 normal_slide">
@@ -627,7 +627,7 @@ If you click on the down arrow on your axis, there will be an option for ‘Show
 </ul>
 </div>
 <aside class="notes">
-We can just fix the math if you know it’s a constant. All we need to do is add 0 to the end of our measure and it will fill in for us. Unfortunately, this only fixes the graph and not the table.
+We can just fix the math if you know it’s a constant. All we need to do is add 0 to the end of our measure, and it will fill in for us. But, unfortunately, this only fixes the graph and not the table.
 </aside>
 </section>
 <section id="basic-strategies-3" class="slide level1 normal_slide">
@@ -651,7 +651,7 @@ We can just fix the math if you know it’s a constant. All we need to do is add
 </ul>
 </div>
 <aside class="notes">
-We can fix the table by skipping the DISTINCTCOUNT on months and replace it all with 12. This will get the correct monthly_average. However, this only work when we know it’s always 12. Also, it doesn’t fix the graph.
+We can fix the table by skipping the DISTINCTCOUNT on months and replace it all with 12. This will get the correct monthly_average. However, this only works when we know it’s always 12. Also, it doesn’t fix the graph.
 </aside>
 </section>
 <section id="basic-strategies-4" class="slide level1 normal_slide">
@@ -672,7 +672,7 @@ We can fix the table by skipping the DISTINCTCOUNT on months and replace it all 
 </ul>
 </div>
 <aside class="notes">
-Finally, we can always just fix the issues in the data. We can clean up data by importing monthly data from the start and importing rows with zeros from there. There are ways to do that in SQL and Power Query. We won’t go into them in this presentation, but it’s a great option if you know you’ll never need more granular data.
+Finally, we can always just fix the issues in the data. For example, we can clean up data by importing monthly data from the start and importing rows with zeros. There are ways to do that in SQL and Power Query. We won’t go into them in this presentation, but it’s a great option if you know you’ll never need more granular data.
 </aside>
 </section>
 <section id="basic-strategies-5" class="slide level1 normal_slide">
@@ -688,13 +688,13 @@ Finally, we can always just fix the issues in the data. We can clean up data by 
 </ul>
 </div>
 <aside class="notes">
-For these strategies, they tend to work very easily. None of them took a lot of effort to implement from where we started. However, they tend to not be extendable. We have to mix and match these strategies to get everything, but that’s annoying. They can fall apart for more advance calculations and become messy when trying to keep it all together. In my experience, if you just need basic graphs and tables, these are great. If you know you’ll more advance calculations and interactivity, a more thorough setup can be better.
+These strategies tend to work very easily. None of them took a lot of effort to implement from where we started. However, they tend to not be extendable. We have to mix and match these strategies to get everything, and that’s annoying. They can fall apart for more advanced calculations and become messy when trying to keep it all together. In my experience, if you just need basic graphs and tables, these are great. However, a more thorough setup can be better if you know you’ll need more advanced calculations and interactivity.
 </aside>
 </section>
 <section id="better-strategy" class="slide level1 section_slide center">
 <h1 class="section_slide center">Better Strategy</h1>
 <aside class="notes">
-This next section goes through that more thorough setup. We’ll reset everything and build a stronger start to enable us to get any calculations we need.
+This next section goes through that more thorough setup. We’ll reset everything and build a stronger start that enables us to get any calculations we need.
 </aside>
 </section>
 <section id="setup-with-bigger-dataset" class="slide level1 normal_slide">
@@ -704,7 +704,7 @@ This next section goes through that more thorough setup. We’ll reset everythin
   src="images/orders_big.PNG" width=100%></p>
 </div>
 <aside class="notes">
-There’s still a year of data but a lot more products. This time there are other trends including decreasing or increasing over time and even products that only sold for one month (those are the points). We’ll call this orders_big.
+There’s still a year of data but a lot more products. There are other trends, including decreasing or increasing over time, and even products that only sold for one month (those are the points). We’ll call this orders_big.
 </aside>
 </section>
 <section id="end-product-1" class="slide level1 normal_slide">
@@ -732,7 +732,7 @@ There’s still a year of data but a lot more products. This time there are othe
 </ul>
 </div>
 <aside class="notes">
-This is just a reminder of what we’re looking to create by the end.
+This is just a reminder of what we’re looking to create by the end. Line graphs and tables by product over time. Graphs and tables for dollar amounts, number of distinct customers, and number of orders. The ability to filter by product and month. And finally, fill in zeros when the product was available.
 </aside>
 </section>
 <section id="better-strategy-1" class="slide level1 normal_slide">
@@ -743,7 +743,7 @@ This is just a reminder of what we’re looking to create by the end.
 </ul>
 </div>
 <aside class="notes">
-There will be three parts to this one. The first part is setting up a calendar table to use as a date dimension.
+There are three parts to this section. The first part is setting up a calendar table to use as a date dimension.
 </aside>
 </section>
 <section id="calendar-table" class="slide level1 normal_slide">
@@ -769,7 +769,7 @@ There will be three parts to this one. The first part is setting up a calendar t
 </ul>
 </div>
 <aside class="notes">
-A calendar table is a table created in Power BI that contains all the dates you need and associated information. We’ll use the Calendar Dax function. This function needs start and end dates. It’ll then fill out all the dates in between (including the start and end dates). We’ll go through three examples.
+A calendar table is a table created in Power BI that contains all the dates you need and associated information. We’ll use the Calendar Dax function. This function requires a start and end date. It’ll then fill out all the dates in between (including the start and end dates). We’ll go through three examples.
 </aside>
 </section>
 <section id="calendar-table-1" class="slide level1 normal_slide">
@@ -790,8 +790,8 @@ A calendar table is a table created in Power BI that contains all the dates you 
   MAX(orders_big[date]))</code></pre>
 </div>
 <aside class="notes">
-<p>We have three different ways to create a date table using the CALENDAR function. The first way provides specific dates. This is useful if you ever need the graph to keep the same date range even if your data changes. The second way uses the TODAY function to get the current date. This will keep your dashboard current no matter what happens with your data. The last way pulls the start and end dates from the data. This will keep your graphs matching the data even if it doesn’t refresh. I tend to use either of the last two depending on the business need.</p>
-There are other options like CALENDARAUTO or setting a date table, but for this presentation we’ll stick with CALENDAR. It’s definitely worth your time to spend an afternoon looking into the other options if you’re going to implement this at your work.
+<h2 id="we-have-three-different-ways-to-create-a-date-table-using-the-calendar-function.-the-first-way-provides-specific-dates.-this-is-useful-if-you-need-the-graph-to-keep-the-same-date-range-even-if-your-data-changes.-the-second-way-uses-the-today-function-to-get-the-current-date.-this-will-keep-your-dashboard-current-no-matter-what-happens-with-your-data.-the-last-way-pulls-the-start-and-end-dates-from-the-data.-this-will-keep-your-graphs-matching-the-data-even-if-it-doesnt-refresh.-i-tend-to-use-either-of-the-last-two-depending-on-the-business-need.">We have three different ways to create a date table using the CALENDAR function. The first way provides specific dates. This is useful if you need the graph to keep the same date range even if your data changes. The second way uses the TODAY function to get the current date. This will keep your dashboard current no matter what happens with your data. The last way pulls the start and end dates from the data. This will keep your graphs matching the data even if it doesn’t refresh. I tend to use either of the last two depending on the business need.</h2>
+There are other options like CALENDARAUTO or setting a date table, but we’ll stick with CALENDAR for this presentation. It’s definitely worth your time to spend an afternoon looking into the other options if you’re going to implement this at your work.
 </aside>
 </section>
 <section id="calendar-table-2" class="slide level1 normal_slide">
@@ -803,7 +803,7 @@ There are other options like CALENDARAUTO or setting a date table, but for this 
 <div>
 
 <aside class="notes">
-Since we’ll want to group by month, we’ll add in a month column. We’ll also change format to match our data. You typically always want it to match as this can speed up calculations.
+Since we’ll want to group by month, we’ll add in a month column. We’ll also change the format to match our data. You typically always want it to match as this can speed up calculations.
 </aside>
 </section>
 <section id="calendar-table-3" class="slide level1 normal_slide">
@@ -846,7 +846,7 @@ The next step for a great setup is using a star schema.
 </li>
 </ul>
 <aside class="notes">
-The star schema will work by placing the main orders_big table in the middle. Then have important dimensions on the outside, like our date table. Often you’ll see this has a ‘suggestion’ from Microsoft, but it’s almost always a good idea from the beginning.
+The star schema will work by placing the main orders_big table in the middle. Then have essential dimensions on the outside, like our date table. Often you’ll see this has a ‘suggestion’ from Microsoft, but it’s almost always a good idea from the beginning.
 </aside>
 </section>
 <section id="star-schema-1" class="slide level1 normal_slide">
@@ -862,7 +862,7 @@ The star schema will work by placing the main orders_big table in the middle. Th
   src="images/star_schema.PNG" width=100%></p>
 </div>
 <aside class="notes">
-Let’s add in two other dimension tables, product and customer. We’ll just summarize the columns from the orders_big table. If they were in other tables in a database, you could bring them in separately. We can sort of see the star shape. It’s just missing the two legs at the bottom. This setup will make our data easy to use with functions.
+Let’s add in two other dimension tables, product, and customer. We’ll just summarize the columns from the orders_big table. If they were in other tables in a database, you could bring them in separately. We can sort of see the star shape. It’s just missing the two legs at the bottom. This setup will make our data easy to use with functions.
 </aside>
 </section>
 <section id="better-strategy-3" class="slide level1 normal_slide">
@@ -900,7 +900,7 @@ That brings us to our last step with using the ADDMISSINGITEMS function. This wi
 </li>
 </ul>
 <aside class="notes">
-This function is defined as ‘Adds rows with empty values to a table returned by SUMMARIZECOLUMNS.’ from the Microsoft documentation or ‘Add the rows with empty measure values back.’ from the Dax guide. I don’t find either of those definitions intuitive but working through the parameters, output, and examples will help explain what it does.
+This function is defined as ‘Adds rows with empty values to a table returned by SUMMARIZECOLUMNS.’ from the Microsoft documentation or ‘Add the rows with empty measure values back.’ from the Dax guide. I don’t find either of those definitions intuitive, but working through the parameters, output, and examples will help explain what it does.
 </aside>
 </section>
 <section id="addmissingitems-1" class="slide level1 normal_slide">
@@ -926,7 +926,7 @@ This function is defined as ‘Adds rows with empty values to a table returned b
 </ul>
 </div>
 <aside class="notes">
-There are four parameters. ShowAll_ColumnName is what you want to fill in. The Table parameter will be output from SUMMARIZECOLUMNS with the missing data. It’ll be based on orders_big for us. The GroupBy_ColumnName is also what you want to fill in unless you’re using ROLLUP. We won’t be using ROLLUP in any of the examples, so it’ll always match ShowAll_ColumnName. Finally, you can add filter tables to remove fill in values you don’t actually want to add in.
+There are four parameters. ShowAll_ColumnName is what you want to fill in. The Table parameter will be output from SUMMARIZECOLUMNS with the missing data. It’ll be based on orders_big for us. The GroupBy_ColumnName is also what you want to fill in unless you’re using ROLLUP. We won’t be using ROLLUP in any of the examples, so it’ll always match ShowAll_ColumnName. Finally, you can add filter tables to remove filled-in values you don’t actually want to add.
 </aside>
 </section>
 <section id="addmissingitems-2" class="slide level1 normal_slide">
@@ -945,7 +945,7 @@ There are four parameters. ShowAll_ColumnName is what you want to fill in. The T
   &quot;amount&quot;, SUM(orders_big[dollar_amount])</code></pre>
 </div>
 <aside class="notes">
-For our setup, we’ll want to fill in any missing combinations of month and product. We can pull these from our dimensions in the star schema. The Table parameter is the sum of the dollar_amount by month and product. Ideally, we’ll see all combinations of month and product with the dollar_amount summed, if there were sales that month.
+For our setup, we’ll want to fill in any missing combinations of month and product. We can pull these from our dimensions in the star schema. The Table parameter is the sum of the dollar_amount by month and product. Ideally, we’ll see all combinations of month and product with the dollar_amount summed if there were sales that month.
 </aside>
 </section>
 <section id="addmissingitems-3" class="slide level1 normal_slide">
@@ -960,7 +960,7 @@ cal_table[cal_month], &#39;product&#39;[product])</code></pre>
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_zeros_added_1.PNG" width=40%></p>
 <aside class="notes">
-Putting it all into the ADDMISSINGITEMS function, you can see ShowAll_ColumnName cal_month and product, the Table is the SUMMARIZECOLUMNS, the GroupBy_ColumnName is the same as the ShowAll_ColumnName, no filters for now. This is basically a full join between calendar months and products, then a left join to our summarized data. We can see some of the missing months in the image.
+Putting it all into the ADDMISSINGITEMS function, you can see ShowAll_ColumnName cal_month and product, the table is the SUMMARIZECOLUMNS, the GroupBy_ColumnName is the same as the ShowAll_ColumnName, no filters for now. This is basically a full join between calendar months and products, then a left join to our summarized data. Finally, we can see some of the missing months in the image.
 </aside>
 </section>
 <section id="addmissingitems-4" class="slide level1 normal_slide">
@@ -977,7 +977,7 @@ cal_table[cal_month], &#39;product&#39;[product]),
 <p><img style="display: block; margin-left: auto; margin-right:auto;" 
   src="images/orders_zeros_added_2.PNG" width=40%></p>
 <aside class="notes">
-I like to add in amount filled, but you could replace amount if you wanted.
+I like to add in the amount filled, but you can replace the amount if you want.
 </aside>
 </section>
 <section id="addmissingitems-5" class="slide level1 normal_slide">
@@ -1007,7 +1007,7 @@ And now we finally have the graph we wanted.
 </div>
 </div>
 <aside class="notes">
-If you have a lot of data you might get a warning in the top corner about not seeing all the data. There’s an option that samples the data to increase speed. You can turn that off to see more lines. There’s not a strict cutoff on data size. It just depends on what you’re graphing.
+If you have a lot of data, you might get a warning about not seeing all the data in the top corner. There’s an option that samples the data to increase speed. You can turn that off to see more lines. There’s not a strict cutoff on data size. It just depends on what you’re graphing.
 </aside>
 </section>
 <section id="addmissingitems-6" class="slide level1 normal_slide">
@@ -1017,13 +1017,13 @@ If you have a lot of data you might get a warning in the top corner about not se
   src="images/average_amount_1.PNG" width=100%></p>
 </div>
 <aside class="notes">
-Now we can compare the summary stats. We can see all the months are filled in so the average monthly amount is now correct.
+Now we can compare the summary stats. We can see all the months are filled in, so the average monthly amount is now correct.
 </aside>
 </section>
 <section id="polishing" class="slide level1 section_slide center">
 <h1 class="section_slide center">Polishing</h1>
 <aside class="notes">
-Now that we have the main setup, we can move to the last main section on polishing up the dashboard.
+Now that we have the main setup, we can move to the last big section on polishing up the dashboard.
 </aside>
 </section>
 <section id="polishing-1" class="slide level1 normal_slide">
@@ -1034,7 +1034,7 @@ Now that we have the main setup, we can move to the last main section on polishi
 </ul>
 </div>
 <aside class="notes">
-The first part is filtering the data to exclude months where the product wasn’t available for sale. We should end up with filled in months only when the product was an option.
+The first part is filtering the data to exclude months where the product wasn’t available for sale. We should end up with filled-in months only when the product was an option.
 </aside>
 </section>
 <section id="filter-product-availability" class="slide level1 normal_slide">
@@ -1044,7 +1044,7 @@ The first part is filtering the data to exclude months where the product wasn’
   src="images/product_dates_table.PNG" width=80%></p>
 </div>
 <aside class="notes">
-Let’s say different products were available for months. We’ll have this in a table called product_dates. This could be saved in a database then pulled into Power BI.
+Let’s say different products were available for different months. We’ll have this in a table called product_dates. This would be saved in a database then pulled into Power BI.
 </aside>
 </section>
 <section id="filter-product-availability-1" class="slide level1 normal_slide">
@@ -1054,7 +1054,7 @@ Let’s say different products were available for months. We’ll have this in a
   src="images/product_dates_connection.PNG" width=60%></p>
 </div>
 <aside class="notes">
-We can join this to our products table. In the product_dates table, there are multiple rows per product for cases when there are jumps in the dates. Like product that are available during the summer could have a row for January to March 2020 and a row for November to December 2020. So you can’t just join to orders_big table.
+We can join this to our products table. In the product_dates table, there are multiple rows per product for cases when there are jumps in the dates. So, for example, products available during the summer could have a row for January to March 2020 and a row for November to December 2020. Therefore you can’t just join to orders_big table because that would be a many-to-many join.
 </aside>
 </section>
 <section id="filter-product-availability-2" class="slide level1 normal_slide">
@@ -1070,7 +1070,7 @@ FILTER(CROSSJOIN(cal_table, product),
   src="images/product_availability_table.PNG" width=100%></p>
 </div>
 <aside class="notes">
-We’re going to build table with month filled down by using CROSSJOIN on our date table and product_dates. Then filter down to the combinations we want. (There are others ways to do this, especially when bringing the data into Power BI)
+We’re going to build a table with months filled down by using CROSSJOIN on our date table and product_dates. Then filter down to the combinations we want. (There are other ways to do this, especially when bringing the data into Power BI)
 </aside>
 </section>
 <section id="filter-product-availability-3" class="slide level1 normal_slide">
@@ -1080,7 +1080,7 @@ We’re going to build table with month filled down by using CROSSJOIN on our da
   src="images/product_availability_connection.PNG" width=100%></p>
 </div>
 <aside class="notes">
-Then we just to our other tables.
+Then we just join to our other tables.
 </aside>
 </section>
 <section id="filter-product-availability-4" class="slide level1 normal_slide">
@@ -1124,7 +1124,7 @@ cal_table[cal_month], &#39;product&#39;[product], product_availability),
   src="images/product_availability_filter.PNG" width=100%></p>
 </div>
 <aside class="notes">
-Same has previous orders_zeros_added table, but with product_availability used as a filter.
+Same as previous orders_zeros_added table, but with product_availability used as a filter.
 </aside>
 </section>
 <section id="filter-product-availability-6" class="slide level1 normal_slide">
@@ -1144,7 +1144,7 @@ Now we can see gaps in the data where there are months without product availabil
   src="images/product_availability_filter_graph_fixed.PNG" width=100%></p>
 </div>
 <aside class="notes">
-To fix the issue of joining over missing dates, the X axis needs to be set to Categorical. And now, everything is good,
+To fix the issue of joining over missing dates, the X-axis needs to be set to Categorical. And now, everything is good.
 </aside>
 </section>
 <section id="filter-product-availability-8" class="slide level1 normal_slide">
@@ -1170,7 +1170,7 @@ Checking the summary tables shows everything is working here too.
 </ul>
 </div>
 <aside class="notes">
-Let’s say you either don’t want the X axis to be categorical or you want all the months with missing for no product availability. We’ll go back before we filtered on availability and reset a little bit.
+Let’s say you either don’t want the X-axis to be categorical, or you want all the months missing for no product availability. We’ll go back before we filter on availability and reset a little bit.
 </aside>
 </section>
 <section id="filter-product-availability-10" class="slide level1 normal_slide">
@@ -1194,7 +1194,7 @@ CROSSJOIN(cal_table_month, product_dates),
     cal_table_month[month] &lt;= product_dates[end_month])</code></pre>
 </div>
 <aside class="notes">
-We’ll create a new star schema around our orders_big table. We can’t reuse the same tables or we’ll get a circular dependency error. So, we’ll add in a product and date dimensions and the table to check product availability. We can reduce our date table to just months since we already summarized the data.
+We’ll create a new star schema around our orders_big table. We can’t reuse the same tables, or we’ll get a circular dependency error. So, we’ll add in product and date dimensions and recreate the table to check product availability. We can reduce our date table to just months since we have already summarized the data.
 </aside>
 </section>
 <section id="filter-product-availability-11" class="slide level1 normal_slide">
@@ -1223,7 +1223,7 @@ product_availability[product], orders_zeros_added[product])</code></pre>
   src="images/product_availability_filter_2.PNG" width=50%></p>
 </div>
 <aside class="notes">
-To incorporate the product availability check, we’ll create a measure using LOOKUPVALUE to see if the month-product combination existed. Then another measure to fill in zeros or keep the missing value.
+To incorporate the product availability check, we’ll create a measure using LOOKUPVALUE to see if the month-product combination existed. Then build another measure to fill in zeros or keep the missing value.
 </aside>
 </section>
 <section id="filter-product-availability-13" class="slide level1 normal_slide">
@@ -1233,7 +1233,7 @@ To incorporate the product availability check, we’ll create a measure using LO
   src="images/product_availability_filter_graph_fixed_2.PNG" width=100%></p>
 </div>
 <aside class="notes">
-We have our continuous axis graph. Note that you need to use cal_table_month for axis.
+We have our continuous axis graph. Note that you need to use cal_table_month for the axis.
 </aside>
 </section>
 <section id="filter-product-availability-14" class="slide level1 normal_slide">
@@ -1270,7 +1270,7 @@ Our summary tables are still good.
 </ul>
 </div>
 <aside class="notes">
-One big catch for mixing missing and zeros in Power BI is that BLANK is not like SQL NULL. BLANK will convert to 0 in summations and substractions but will stay BLANK in division and multiplication. For example if you had this equation and B is BLANK, the left side will equal 1 because A divided by B is BLANK then 1 minus BLANK is 1. However the right side is BLANK because B minus A is negative A then negative A divided by B is BLANK. Even though these should match. So, depending on how you set up your measures, you can get different results. You’ll need to watch this in calculations.
+One big catch for mixing missing and zeros in Power BI is that BLANK is not like SQL NULL. BLANK will convert to 0 in summations and substractions but will stay BLANK in division and multiplication. For example, if you had this equation and B is BLANK, the left side will equal 1 because A divided by B is BLANK, then 1 minus BLANK is 1. However, the right side is BLANK because B minus A is negative A, then negative A divided by B is BLANK. Even though these should match. So, depending on how you set up your measures, you can get different results. You’ll need to watch this in calculations.
 </aside>
 </section>
 <section id="polishing-2" class="slide level1 normal_slide">
@@ -1286,7 +1286,7 @@ One big catch for mixing missing and zeros in Power BI is that BLANK is not like
 </ul>
 </div>
 <aside class="notes">
-In addition to amount, we wanted measures for customers and orders.
+In addition to the amount, we wanted measures for customers and orders.
 </aside>
 </section>
 <section id="customers-and-orders-measures" class="slide level1 normal_slide">
@@ -1392,7 +1392,7 @@ Similar tables.
 </ul>
 </div>
 <aside class="notes">
-In some cases, you’ll need to use DISTINCTCOUNT after filling in missing months. Like if you need more advance filtering or calculations. For example, distinct customers over a year will only equal to the sum of distinct customers every month if there are no repeated customers. To solve this problem, you can bring customer_id in the SUMMARIZECOLUMNS in ADDMISSINGITEMS but not place it in the ShowAll_ColumnName parameter. This will bring the individual customer_id’s through but not fill in missing months for them. You’ll end up with month-product rows with missing for customer_id and order_id.
+In some cases, you’ll need to use DISTINCTCOUNT after filling in the missing months. Like if you need more advanced filtering or calculations. For example, distinct customers over a year will only equal the sum of distinct customers every month if there are no repeated customers. To solve this problem, you can bring customer_id in the SUMMARIZECOLUMNS in ADDMISSINGITEMS but not place it in the ShowAll_ColumnName parameter. This will bring the individual customer_id’s through but not fill in missing months for them. You’ll end up with month-product rows that have missing values for customer_id and order_id.
 </aside>
 </section>
 <section id="polishing-3" class="slide level1 normal_slide">
@@ -1434,7 +1434,7 @@ Finally, the last step is to add filters for product and month.
 </ul>
 </div>
 <aside class="notes">
-You can use built in filters for the table either in the filter panel or slicers. You can also built out a star schema again if you want. That’s pretty much it. All the normal Power BI features work from here.
+You can use built-in filters for the table either in the filter panel or slicers. You can also build out a star schema again if you want. That’s pretty much it. All the usual Power BI features work from here.
 </aside>
 </section>
 <section id="end" class="slide level1 title_slide center">
